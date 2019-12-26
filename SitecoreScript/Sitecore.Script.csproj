@@ -1,0 +1,709 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.8\build\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.8\build\Microsoft.CodeAnalysis.Analyzers.props')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{71DB45BD-52A9-45C6-9B5C-BAB3D4D02A47}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sitecore.Script</RootNamespace>
+    <AssemblyName>Sitecore.Script</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44362</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.6</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeAnalysis, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.3.3.1\lib\netstandard2.0\Microsoft.CodeAnalysis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.3.3.1\lib\netstandard2.0\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp.Features, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.Features.3.3.1\lib\netstandard2.0\Microsoft.CodeAnalysis.CSharp.Features.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp.Workspaces, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.Workspaces.3.3.1\lib\netstandard2.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Features, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Features.3.3.1\lib\netstandard2.0\Microsoft.CodeAnalysis.Features.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.FlowAnalysis.Utilities, Version=2.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.FlowAnalysis.Utilities.2.9.6\lib\netstandard1.3\Microsoft.CodeAnalysis.FlowAnalysis.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.Workspaces, Version=3.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.3.3.1\lib\netstandard2.0\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.DiaSymReader, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.DiaSymReader.1.3.0\lib\net20\Microsoft.DiaSymReader.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.1.0.0\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sitecore.Kernel, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Kernel.NoReferences.9.0.180604\lib\NET462\Sitecore.Kernel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.6.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.AttributedModel, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.AttributedModel.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.Convention, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.Convention.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.Hosting, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.Hosting.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.Runtime, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.Runtime.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.TypedParts, Version=1.0.31.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Composition.TypedParts.1.0.31\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Console, Version=4.0.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.1\lib\net46\System.Console.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reflection, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.4.1.0\lib\net462\System.Reflection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=1.4.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.7.0\lib\netstandard2.0\System.Reflection.Metadata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Extensions.4.1.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.4.6.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="node_modules\codemirror-addon-infotip\dist\infotip.css" />
+    <Content Include="node_modules\codemirror-addon-infotip\dist\infotip.js" />
+    <Content Include="node_modules\codemirror-addon-infotip\LICENSE.txt" />
+    <Content Include="node_modules\codemirror-addon-lint-fix\dist\lint-fix.css" />
+    <Content Include="node_modules\codemirror-addon-lint-fix\dist\lint-fix.js" />
+    <Content Include="node_modules\codemirror-addon-lint-fix\LICENSE.txt" />
+    <Content Include="node_modules\codemirror\addon\comment\comment.js" />
+    <Content Include="node_modules\codemirror\addon\comment\continuecomment.js" />
+    <Content Include="node_modules\codemirror\addon\dialog\dialog.css" />
+    <Content Include="node_modules\codemirror\addon\dialog\dialog.js" />
+    <Content Include="node_modules\codemirror\addon\display\autorefresh.js" />
+    <Content Include="node_modules\codemirror\addon\display\fullscreen.css" />
+    <Content Include="node_modules\codemirror\addon\display\fullscreen.js" />
+    <Content Include="node_modules\codemirror\addon\display\panel.js" />
+    <Content Include="node_modules\codemirror\addon\display\placeholder.js" />
+    <Content Include="node_modules\codemirror\addon\display\rulers.js" />
+    <Content Include="node_modules\codemirror\addon\edit\closebrackets.js" />
+    <Content Include="node_modules\codemirror\addon\edit\closetag.js" />
+    <Content Include="node_modules\codemirror\addon\edit\continuelist.js" />
+    <Content Include="node_modules\codemirror\addon\edit\matchbrackets.js" />
+    <Content Include="node_modules\codemirror\addon\edit\matchtags.js" />
+    <Content Include="node_modules\codemirror\addon\edit\trailingspace.js" />
+    <Content Include="node_modules\codemirror\addon\fold\brace-fold.js" />
+    <Content Include="node_modules\codemirror\addon\fold\comment-fold.js" />
+    <Content Include="node_modules\codemirror\addon\fold\foldcode.js" />
+    <Content Include="node_modules\codemirror\addon\fold\foldgutter.css" />
+    <Content Include="node_modules\codemirror\addon\fold\foldgutter.js" />
+    <Content Include="node_modules\codemirror\addon\fold\indent-fold.js" />
+    <Content Include="node_modules\codemirror\addon\fold\markdown-fold.js" />
+    <Content Include="node_modules\codemirror\addon\fold\xml-fold.js" />
+    <Content Include="node_modules\codemirror\addon\hint\anyword-hint.js" />
+    <Content Include="node_modules\codemirror\addon\hint\css-hint.js" />
+    <Content Include="node_modules\codemirror\addon\hint\html-hint.js" />
+    <Content Include="node_modules\codemirror\addon\hint\javascript-hint.js" />
+    <Content Include="node_modules\codemirror\addon\hint\show-hint.css" />
+    <Content Include="node_modules\codemirror\addon\hint\show-hint.js" />
+    <Content Include="node_modules\codemirror\addon\hint\sql-hint.js" />
+    <Content Include="node_modules\codemirror\addon\hint\xml-hint.js" />
+    <Content Include="node_modules\codemirror\addon\lint\coffeescript-lint.js" />
+    <Content Include="node_modules\codemirror\addon\lint\css-lint.js" />
+    <Content Include="node_modules\codemirror\addon\lint\html-lint.js" />
+    <Content Include="node_modules\codemirror\addon\lint\javascript-lint.js" />
+    <Content Include="node_modules\codemirror\addon\lint\json-lint.js" />
+    <Content Include="node_modules\codemirror\addon\lint\lint.css" />
+    <Content Include="node_modules\codemirror\addon\lint\lint.js" />
+    <Content Include="node_modules\codemirror\addon\lint\yaml-lint.js" />
+    <Content Include="node_modules\codemirror\addon\merge\merge.css" />
+    <Content Include="node_modules\codemirror\addon\merge\merge.js" />
+    <Content Include="node_modules\codemirror\addon\mode\loadmode.js" />
+    <Content Include="node_modules\codemirror\addon\mode\multiplex.js" />
+    <Content Include="node_modules\codemirror\addon\mode\multiplex_test.js" />
+    <Content Include="node_modules\codemirror\addon\mode\overlay.js" />
+    <Content Include="node_modules\codemirror\addon\mode\simple.js" />
+    <Content Include="node_modules\codemirror\addon\runmode\colorize.js" />
+    <Content Include="node_modules\codemirror\addon\runmode\runmode-standalone.js" />
+    <Content Include="node_modules\codemirror\addon\runmode\runmode.js" />
+    <Content Include="node_modules\codemirror\addon\runmode\runmode.node.js" />
+    <Content Include="node_modules\codemirror\addon\scroll\annotatescrollbar.js" />
+    <Content Include="node_modules\codemirror\addon\scroll\scrollpastend.js" />
+    <Content Include="node_modules\codemirror\addon\scroll\simplescrollbars.css" />
+    <Content Include="node_modules\codemirror\addon\scroll\simplescrollbars.js" />
+    <Content Include="node_modules\codemirror\addon\search\jump-to-line.js" />
+    <Content Include="node_modules\codemirror\addon\search\match-highlighter.js" />
+    <Content Include="node_modules\codemirror\addon\search\matchesonscrollbar.css" />
+    <Content Include="node_modules\codemirror\addon\search\matchesonscrollbar.js" />
+    <Content Include="node_modules\codemirror\addon\search\search.js" />
+    <Content Include="node_modules\codemirror\addon\search\searchcursor.js" />
+    <Content Include="node_modules\codemirror\addon\selection\active-line.js" />
+    <Content Include="node_modules\codemirror\addon\selection\mark-selection.js" />
+    <Content Include="node_modules\codemirror\addon\selection\selection-pointer.js" />
+    <Content Include="node_modules\codemirror\addon\tern\tern.css" />
+    <Content Include="node_modules\codemirror\addon\tern\tern.js" />
+    <Content Include="node_modules\codemirror\addon\tern\worker.js" />
+    <Content Include="node_modules\codemirror\addon\wrap\hardwrap.js" />
+    <Content Include="node_modules\codemirror\keymap\emacs.js" />
+    <Content Include="node_modules\codemirror\keymap\sublime.js" />
+    <Content Include="node_modules\codemirror\keymap\vim.js" />
+    <Content Include="node_modules\codemirror\lib\codemirror.css" />
+    <Content Include="node_modules\codemirror\lib\codemirror.js" />
+    <Content Include="node_modules\codemirror\mode\apl\apl.js" />
+    <Content Include="node_modules\codemirror\mode\asciiarmor\asciiarmor.js" />
+    <Content Include="node_modules\codemirror\mode\asn.1\asn.1.js" />
+    <Content Include="node_modules\codemirror\mode\asterisk\asterisk.js" />
+    <Content Include="node_modules\codemirror\mode\brainfuck\brainfuck.js" />
+    <Content Include="node_modules\codemirror\mode\clike\clike.js" />
+    <Content Include="node_modules\codemirror\mode\clojure\clojure.js" />
+    <Content Include="node_modules\codemirror\mode\cmake\cmake.js" />
+    <Content Include="node_modules\codemirror\mode\cobol\cobol.js" />
+    <Content Include="node_modules\codemirror\mode\coffeescript\coffeescript.js" />
+    <Content Include="node_modules\codemirror\mode\commonlisp\commonlisp.js" />
+    <Content Include="node_modules\codemirror\mode\crystal\crystal.js" />
+    <Content Include="node_modules\codemirror\mode\css\css.js" />
+    <Content Include="node_modules\codemirror\mode\cypher\cypher.js" />
+    <Content Include="node_modules\codemirror\mode\dart\dart.js" />
+    <Content Include="node_modules\codemirror\mode\diff\diff.js" />
+    <Content Include="node_modules\codemirror\mode\django\django.js" />
+    <Content Include="node_modules\codemirror\mode\dockerfile\dockerfile.js" />
+    <Content Include="node_modules\codemirror\mode\dtd\dtd.js" />
+    <Content Include="node_modules\codemirror\mode\dylan\dylan.js" />
+    <Content Include="node_modules\codemirror\mode\d\d.js" />
+    <Content Include="node_modules\codemirror\mode\ebnf\ebnf.js" />
+    <Content Include="node_modules\codemirror\mode\ecl\ecl.js" />
+    <Content Include="node_modules\codemirror\mode\eiffel\eiffel.js" />
+    <Content Include="node_modules\codemirror\mode\elm\elm.js" />
+    <Content Include="node_modules\codemirror\mode\erlang\erlang.js" />
+    <Content Include="node_modules\codemirror\mode\factor\factor.js" />
+    <Content Include="node_modules\codemirror\mode\fcl\fcl.js" />
+    <Content Include="node_modules\codemirror\mode\forth\forth.js" />
+    <Content Include="node_modules\codemirror\mode\fortran\fortran.js" />
+    <Content Include="node_modules\codemirror\mode\gas\gas.js" />
+    <Content Include="node_modules\codemirror\mode\gfm\gfm.js" />
+    <Content Include="node_modules\codemirror\mode\gherkin\gherkin.js" />
+    <Content Include="node_modules\codemirror\mode\go\go.js" />
+    <Content Include="node_modules\codemirror\mode\groovy\groovy.js" />
+    <Content Include="node_modules\codemirror\mode\haml\haml.js" />
+    <Content Include="node_modules\codemirror\mode\handlebars\handlebars.js" />
+    <Content Include="node_modules\codemirror\mode\haskell-literate\haskell-literate.js" />
+    <Content Include="node_modules\codemirror\mode\haskell\haskell.js" />
+    <Content Include="node_modules\codemirror\mode\haxe\haxe.js" />
+    <Content Include="node_modules\codemirror\mode\htmlembedded\htmlembedded.js" />
+    <Content Include="node_modules\codemirror\mode\htmlmixed\htmlmixed.js" />
+    <Content Include="node_modules\codemirror\mode\http\http.js" />
+    <Content Include="node_modules\codemirror\mode\idl\idl.js" />
+    <Content Include="node_modules\codemirror\mode\javascript\javascript.js" />
+    <Content Include="node_modules\codemirror\mode\jinja2\jinja2.js" />
+    <Content Include="node_modules\codemirror\mode\jsx\jsx.js" />
+    <Content Include="node_modules\codemirror\mode\julia\julia.js" />
+    <Content Include="node_modules\codemirror\mode\livescript\livescript.js" />
+    <Content Include="node_modules\codemirror\mode\lua\lua.js" />
+    <Content Include="node_modules\codemirror\mode\markdown\markdown.js" />
+    <Content Include="node_modules\codemirror\mode\mathematica\mathematica.js" />
+    <Content Include="node_modules\codemirror\mode\mbox\mbox.js" />
+    <Content Include="node_modules\codemirror\mode\meta.js" />
+    <Content Include="node_modules\codemirror\mode\mirc\mirc.js" />
+    <Content Include="node_modules\codemirror\mode\mllike\mllike.js" />
+    <Content Include="node_modules\codemirror\mode\modelica\modelica.js" />
+    <Content Include="node_modules\codemirror\mode\mscgen\mscgen.js" />
+    <Content Include="node_modules\codemirror\mode\mumps\mumps.js" />
+    <Content Include="node_modules\codemirror\mode\nginx\nginx.js" />
+    <Content Include="node_modules\codemirror\mode\nsis\nsis.js" />
+    <Content Include="node_modules\codemirror\mode\ntriples\ntriples.js" />
+    <Content Include="node_modules\codemirror\mode\octave\octave.js" />
+    <Content Include="node_modules\codemirror\mode\oz\oz.js" />
+    <Content Include="node_modules\codemirror\mode\pascal\pascal.js" />
+    <Content Include="node_modules\codemirror\mode\pegjs\pegjs.js" />
+    <Content Include="node_modules\codemirror\mode\perl\perl.js" />
+    <Content Include="node_modules\codemirror\mode\php\php.js" />
+    <Content Include="node_modules\codemirror\mode\pig\pig.js" />
+    <Content Include="node_modules\codemirror\mode\powershell\powershell.js" />
+    <Content Include="node_modules\codemirror\mode\properties\properties.js" />
+    <Content Include="node_modules\codemirror\mode\protobuf\protobuf.js" />
+    <Content Include="node_modules\codemirror\mode\pug\pug.js" />
+    <Content Include="node_modules\codemirror\mode\puppet\puppet.js" />
+    <Content Include="node_modules\codemirror\mode\python\python.js" />
+    <Content Include="node_modules\codemirror\mode\q\q.js" />
+    <Content Include="node_modules\codemirror\mode\rpm\changes\index.html" />
+    <Content Include="node_modules\codemirror\mode\rpm\rpm.js" />
+    <Content Include="node_modules\codemirror\mode\rst\rst.js" />
+    <Content Include="node_modules\codemirror\mode\ruby\ruby.js" />
+    <Content Include="node_modules\codemirror\mode\rust\rust.js" />
+    <Content Include="node_modules\codemirror\mode\r\r.js" />
+    <Content Include="node_modules\codemirror\mode\sass\sass.js" />
+    <Content Include="node_modules\codemirror\mode\sas\sas.js" />
+    <Content Include="node_modules\codemirror\mode\scheme\scheme.js" />
+    <Content Include="node_modules\codemirror\mode\shell\shell.js" />
+    <Content Include="node_modules\codemirror\mode\sieve\sieve.js" />
+    <Content Include="node_modules\codemirror\mode\slim\slim.js" />
+    <Content Include="node_modules\codemirror\mode\smalltalk\smalltalk.js" />
+    <Content Include="node_modules\codemirror\mode\smarty\smarty.js" />
+    <Content Include="node_modules\codemirror\mode\solr\solr.js" />
+    <Content Include="node_modules\codemirror\mode\soy\soy.js" />
+    <Content Include="node_modules\codemirror\mode\sparql\sparql.js" />
+    <Content Include="node_modules\codemirror\mode\spreadsheet\spreadsheet.js" />
+    <Content Include="node_modules\codemirror\mode\sql\sql.js" />
+    <Content Include="node_modules\codemirror\mode\stex\stex.js" />
+    <Content Include="node_modules\codemirror\mode\stylus\stylus.js" />
+    <Content Include="node_modules\codemirror\mode\swift\swift.js" />
+    <Content Include="node_modules\codemirror\mode\tcl\tcl.js" />
+    <Content Include="node_modules\codemirror\mode\textile\textile.js" />
+    <Content Include="node_modules\codemirror\mode\tiddlywiki\tiddlywiki.css" />
+    <Content Include="node_modules\codemirror\mode\tiddlywiki\tiddlywiki.js" />
+    <Content Include="node_modules\codemirror\mode\tiki\tiki.css" />
+    <Content Include="node_modules\codemirror\mode\tiki\tiki.js" />
+    <Content Include="node_modules\codemirror\mode\toml\toml.js" />
+    <Content Include="node_modules\codemirror\mode\tornado\tornado.js" />
+    <Content Include="node_modules\codemirror\mode\troff\troff.js" />
+    <Content Include="node_modules\codemirror\mode\ttcn-cfg\ttcn-cfg.js" />
+    <Content Include="node_modules\codemirror\mode\ttcn\ttcn.js" />
+    <Content Include="node_modules\codemirror\mode\turtle\turtle.js" />
+    <Content Include="node_modules\codemirror\mode\twig\twig.js" />
+    <Content Include="node_modules\codemirror\mode\vbscript\vbscript.js" />
+    <Content Include="node_modules\codemirror\mode\vb\vb.js" />
+    <Content Include="node_modules\codemirror\mode\velocity\velocity.js" />
+    <Content Include="node_modules\codemirror\mode\verilog\verilog.js" />
+    <Content Include="node_modules\codemirror\mode\vhdl\vhdl.js" />
+    <Content Include="node_modules\codemirror\mode\vue\vue.js" />
+    <Content Include="node_modules\codemirror\mode\webidl\webidl.js" />
+    <Content Include="node_modules\codemirror\mode\xml\xml.js" />
+    <Content Include="node_modules\codemirror\mode\xquery\xquery.js" />
+    <Content Include="node_modules\codemirror\mode\yacas\yacas.js" />
+    <Content Include="node_modules\codemirror\mode\yaml-frontmatter\yaml-frontmatter.js" />
+    <Content Include="node_modules\codemirror\mode\yaml\yaml.js" />
+    <Content Include="node_modules\codemirror\mode\z80\z80.js" />
+    <Content Include="node_modules\codemirror\rollup.config.js" />
+    <Content Include="node_modules\codemirror\src\codemirror.js" />
+    <Content Include="node_modules\codemirror\src\display\Display.js" />
+    <Content Include="node_modules\codemirror\src\display\focus.js" />
+    <Content Include="node_modules\codemirror\src\display\gutters.js" />
+    <Content Include="node_modules\codemirror\src\display\highlight_worker.js" />
+    <Content Include="node_modules\codemirror\src\display\line_numbers.js" />
+    <Content Include="node_modules\codemirror\src\display\mode_state.js" />
+    <Content Include="node_modules\codemirror\src\display\operations.js" />
+    <Content Include="node_modules\codemirror\src\display\scrollbars.js" />
+    <Content Include="node_modules\codemirror\src\display\scrolling.js" />
+    <Content Include="node_modules\codemirror\src\display\scroll_events.js" />
+    <Content Include="node_modules\codemirror\src\display\selection.js" />
+    <Content Include="node_modules\codemirror\src\display\update_display.js" />
+    <Content Include="node_modules\codemirror\src\display\update_line.js" />
+    <Content Include="node_modules\codemirror\src\display\update_lines.js" />
+    <Content Include="node_modules\codemirror\src\display\view_tracking.js" />
+    <Content Include="node_modules\codemirror\src\edit\CodeMirror.js" />
+    <Content Include="node_modules\codemirror\src\edit\commands.js" />
+    <Content Include="node_modules\codemirror\src\edit\deleteNearSelection.js" />
+    <Content Include="node_modules\codemirror\src\edit\drop_events.js" />
+    <Content Include="node_modules\codemirror\src\edit\fromTextArea.js" />
+    <Content Include="node_modules\codemirror\src\edit\global_events.js" />
+    <Content Include="node_modules\codemirror\src\edit\key_events.js" />
+    <Content Include="node_modules\codemirror\src\edit\legacy.js" />
+    <Content Include="node_modules\codemirror\src\edit\main.js" />
+    <Content Include="node_modules\codemirror\src\edit\methods.js" />
+    <Content Include="node_modules\codemirror\src\edit\mouse_events.js" />
+    <Content Include="node_modules\codemirror\src\edit\options.js" />
+    <Content Include="node_modules\codemirror\src\edit\utils.js" />
+    <Content Include="node_modules\codemirror\src\input\ContentEditableInput.js" />
+    <Content Include="node_modules\codemirror\src\input\indent.js" />
+    <Content Include="node_modules\codemirror\src\input\input.js" />
+    <Content Include="node_modules\codemirror\src\input\keymap.js" />
+    <Content Include="node_modules\codemirror\src\input\keynames.js" />
+    <Content Include="node_modules\codemirror\src\input\movement.js" />
+    <Content Include="node_modules\codemirror\src\input\TextareaInput.js" />
+    <Content Include="node_modules\codemirror\src\line\highlight.js" />
+    <Content Include="node_modules\codemirror\src\line\line_data.js" />
+    <Content Include="node_modules\codemirror\src\line\pos.js" />
+    <Content Include="node_modules\codemirror\src\line\saw_special_spans.js" />
+    <Content Include="node_modules\codemirror\src\line\spans.js" />
+    <Content Include="node_modules\codemirror\src\line\utils_line.js" />
+    <Content Include="node_modules\codemirror\src\measurement\position_measurement.js" />
+    <Content Include="node_modules\codemirror\src\measurement\widgets.js" />
+    <Content Include="node_modules\codemirror\src\model\changes.js" />
+    <Content Include="node_modules\codemirror\src\model\change_measurement.js" />
+    <Content Include="node_modules\codemirror\src\model\chunk.js" />
+    <Content Include="node_modules\codemirror\src\model\Doc.js" />
+    <Content Include="node_modules\codemirror\src\model\document_data.js" />
+    <Content Include="node_modules\codemirror\src\model\history.js" />
+    <Content Include="node_modules\codemirror\src\model\line_widget.js" />
+    <Content Include="node_modules\codemirror\src\model\mark_text.js" />
+    <Content Include="node_modules\codemirror\src\model\selection.js" />
+    <Content Include="node_modules\codemirror\src\model\selection_updates.js" />
+    <Content Include="node_modules\codemirror\src\modes.js" />
+    <Content Include="node_modules\codemirror\src\util\bidi.js" />
+    <Content Include="node_modules\codemirror\src\util\browser.js" />
+    <Content Include="node_modules\codemirror\src\util\dom.js" />
+    <Content Include="node_modules\codemirror\src\util\event.js" />
+    <Content Include="node_modules\codemirror\src\util\feature_detection.js" />
+    <Content Include="node_modules\codemirror\src\util\misc.js" />
+    <Content Include="node_modules\codemirror\src\util\operation_group.js" />
+    <Content Include="node_modules\codemirror\src\util\StringStream.js" />
+    <Content Include="node_modules\codemirror\theme\3024-day.css" />
+    <Content Include="node_modules\codemirror\theme\3024-night.css" />
+    <Content Include="node_modules\codemirror\theme\abcdef.css" />
+    <Content Include="node_modules\codemirror\theme\ambiance-mobile.css" />
+    <Content Include="node_modules\codemirror\theme\ambiance.css" />
+    <Content Include="node_modules\codemirror\theme\base16-dark.css" />
+    <Content Include="node_modules\codemirror\theme\base16-light.css" />
+    <Content Include="node_modules\codemirror\theme\bespin.css" />
+    <Content Include="node_modules\codemirror\theme\blackboard.css" />
+    <Content Include="node_modules\codemirror\theme\cobalt.css" />
+    <Content Include="node_modules\codemirror\theme\colorforth.css" />
+    <Content Include="node_modules\codemirror\theme\darcula.css" />
+    <Content Include="node_modules\codemirror\theme\dracula.css" />
+    <Content Include="node_modules\codemirror\theme\duotone-dark.css" />
+    <Content Include="node_modules\codemirror\theme\duotone-light.css" />
+    <Content Include="node_modules\codemirror\theme\eclipse.css" />
+    <Content Include="node_modules\codemirror\theme\elegant.css" />
+    <Content Include="node_modules\codemirror\theme\erlang-dark.css" />
+    <Content Include="node_modules\codemirror\theme\gruvbox-dark.css" />
+    <Content Include="node_modules\codemirror\theme\hopscotch.css" />
+    <Content Include="node_modules\codemirror\theme\icecoder.css" />
+    <Content Include="node_modules\codemirror\theme\idea.css" />
+    <Content Include="node_modules\codemirror\theme\isotope.css" />
+    <Content Include="node_modules\codemirror\theme\lesser-dark.css" />
+    <Content Include="node_modules\codemirror\theme\liquibyte.css" />
+    <Content Include="node_modules\codemirror\theme\lucario.css" />
+    <Content Include="node_modules\codemirror\theme\material-darker.css" />
+    <Content Include="node_modules\codemirror\theme\material-ocean.css" />
+    <Content Include="node_modules\codemirror\theme\material-palenight.css" />
+    <Content Include="node_modules\codemirror\theme\material.css" />
+    <Content Include="node_modules\codemirror\theme\mbo.css" />
+    <Content Include="node_modules\codemirror\theme\mdn-like.css" />
+    <Content Include="node_modules\codemirror\theme\midnight.css" />
+    <Content Include="node_modules\codemirror\theme\monokai.css" />
+    <Content Include="node_modules\codemirror\theme\moxer.css" />
+    <Content Include="node_modules\codemirror\theme\neat.css" />
+    <Content Include="node_modules\codemirror\theme\neo.css" />
+    <Content Include="node_modules\codemirror\theme\night.css" />
+    <Content Include="node_modules\codemirror\theme\nord.css" />
+    <Content Include="node_modules\codemirror\theme\oceanic-next.css" />
+    <Content Include="node_modules\codemirror\theme\panda-syntax.css" />
+    <Content Include="node_modules\codemirror\theme\paraiso-dark.css" />
+    <Content Include="node_modules\codemirror\theme\paraiso-light.css" />
+    <Content Include="node_modules\codemirror\theme\pastel-on-dark.css" />
+    <Content Include="node_modules\codemirror\theme\railscasts.css" />
+    <Content Include="node_modules\codemirror\theme\rubyblue.css" />
+    <Content Include="node_modules\codemirror\theme\seti.css" />
+    <Content Include="node_modules\codemirror\theme\shadowfox.css" />
+    <Content Include="node_modules\codemirror\theme\solarized.css" />
+    <Content Include="node_modules\codemirror\theme\ssms.css" />
+    <Content Include="node_modules\codemirror\theme\the-matrix.css" />
+    <Content Include="node_modules\codemirror\theme\tomorrow-night-bright.css" />
+    <Content Include="node_modules\codemirror\theme\tomorrow-night-eighties.css" />
+    <Content Include="node_modules\codemirror\theme\ttcn.css" />
+    <Content Include="node_modules\codemirror\theme\twilight.css" />
+    <Content Include="node_modules\codemirror\theme\vibrant-ink.css" />
+    <Content Include="node_modules\codemirror\theme\xq-dark.css" />
+    <Content Include="node_modules\codemirror\theme\xq-light.css" />
+    <Content Include="node_modules\codemirror\theme\yeti.css" />
+    <Content Include="node_modules\codemirror\theme\yonce.css" />
+    <Content Include="node_modules\codemirror\theme\zenburn.css" />
+    <Content Include="node_modules\mirrorsharp\mirrorsharp.css" />
+    <Content Include="node_modules\mirrorsharp\mirrorsharp.js" />
+    <Content Include="sitecore\admin\SitecoreScript\css\codemirror.css" />
+    <Content Include="sitecore\admin\SitecoreScript\css\infotip.css" />
+    <Content Include="sitecore\admin\SitecoreScript\css\lint-fix.css" />
+    <Content Include="sitecore\admin\SitecoreScript\css\lint.css" />
+    <Content Include="sitecore\admin\SitecoreScript\css\mirrorsharp.css" />
+    <Content Include="sitecore\admin\SitecoreScript\css\monokai.css" />
+    <Content Include="sitecore\admin\SitecoreScript\css\scripteditor.css" />
+    <Content Include="sitecore\admin\SitecoreScript\css\show-hint.css" />
+    <Content Include="sitecore\admin\SitecoreScript\img\arrow-alt-circle-right-regular.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\arrow-circle-right-orange.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\arrow-circle-right-red.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\arrow-circle-right-yellow.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\layer-group-solid-orange.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\layer-group-solid-red.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\layer-group-solid-yellow.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\layer-group-solid.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\plus-square-solid-yellow.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\plus-square-solid.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-blue1.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-blue2.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-blue3.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-blue4.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-blue5.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-blue6.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-blue7.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-blue8.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-green1.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-green2.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-green3.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-green4.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-green5.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-green6.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-green7.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-green8.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-orange1.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-orange2.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-orange3.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-orange4.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-orange5.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-orange6.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-orange7.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-orange8.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-pink1.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-pink2.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-pink3.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-pink4.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-pink5.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-pink6.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-pink7.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-pink8.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red1.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red2.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red3.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red4.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red5.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red6.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red7.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red8.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\img\tools-solid.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\js\jstree.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\scripteditor.js" />
+    <Content Include="sitecore\admin\SitecoreScript\ScriptEditor.aspx" />
+    <Content Include="sitecore\admin\SitecoreScript\js\clike.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\codemirror.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\infotip.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\lint-fix.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\lint.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\mirrorsharp.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\show-hint.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DependencyInjection\ServicesConfigurator.cs" />
+    <Compile Include="Extensions\SetOptionsFromClientExtension.cs" />
+    <Compile Include="Helpers\ItemMapper.cs" />
+    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Models\TreeNode.cs" />
+    <Compile Include="Pipelines\IgnoreUrlList.cs" />
+    <Compile Include="Pipelines\MirrorSharpOwinMiddleware.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\SitecoreIdentity.cs" />
+    <Compile Include="Security\SitecorePrincipal.cs" />
+    <Compile Include="sitecore\admin\SitecoreScript\ScriptEditor.aspx.cs">
+      <DependentUpon>ScriptEditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore\admin\SitecoreScript\ScriptEditor.aspx.designer.cs">
+      <DependentUpon>ScriptEditor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="node_modules\%40types\codemirror\LICENSE" />
+    <Content Include="node_modules\%40types\codemirror\package.json" />
+    <Content Include="node_modules\%40types\codemirror\README.md" />
+    <Content Include="node_modules\codemirror-addon-infotip\package.json" />
+    <Content Include="node_modules\codemirror-addon-infotip\README.md" />
+    <Content Include="node_modules\codemirror-addon-lint-fix\package.json" />
+    <Content Include="node_modules\codemirror-addon-lint-fix\README.md" />
+    <Content Include="node_modules\codemirror\AUTHORS" />
+    <Content Include="node_modules\codemirror\bin\source-highlight" />
+    <Content Include="node_modules\codemirror\CHANGELOG.md" />
+    <Content Include="node_modules\codemirror\CONTRIBUTING.md" />
+    <Content Include="node_modules\codemirror\LICENSE" />
+    <Content Include="node_modules\codemirror\package.json" />
+    <Content Include="node_modules\codemirror\README.md" />
+    <Content Include="node_modules\mirrorsharp\mirrorsharp.less" />
+    <Content Include="node_modules\mirrorsharp\package.json" />
+    <Content Include="node_modules\mirrorsharp\README.md" />
+    <None Include="App_Config\Include\Sitecore.Script.config" />
+    <None Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\MirrorSharp.Common.csproj">
+      <Project>{5bfebf5a-e2ea-4703-a5be-4e49cef0bcea}</Project>
+      <Name>MirrorSharp.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Owin\MirrorSharp.Owin.csproj">
+      <Project>{075b35d7-88af-48ef-869d-6cd7c37ca168}</Project>
+      <Name>MirrorSharp.Owin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScriptEngine\ScriptSharp.ScriptEngine.csproj">
+      <Project>{2ac60740-db95-40cd-a4fe-a46c35098c4c}</Project>
+      <Name>ScriptSharp.ScriptEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SitecoreOwin\Sitecore.Owin\Sitecore.Owin.csproj">
+      <Project>{fe8dfc39-40dd-41c6-bfb4-f79a38000ca5}</Project>
+      <Name>Sitecore.Owin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="node_modules\%40types\codemirror\codemirror-matchbrackets.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\codemirror\codemirror-runmode.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\codemirror\codemirror-showhint.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\codemirror\index.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\codemirror\searchcursor.d.ts" />
+    <TypeScriptCompile Include="node_modules\mirrorsharp\mirrorsharp.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>18628</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44362/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.8\build\Microsoft.CodeAnalysis.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.8\build\Microsoft.CodeAnalysis.Analyzers.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

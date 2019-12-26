@@ -1,0 +1,66 @@
+/*! Copyright (c) Andrey Shchekin (MIT, see LICENSE.txt)*/
+/* This follows the same styling as 'hint' addin */
+.CodeMirror-lintfix-marker-fixable::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0.9;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTJDBGvsAAAApUlEQVQ4T+WQPQoDIRCFPUkuIVh7Am/qARRtPYBVrmC3WySkcrKzMPCWFZG0KT5kHr7PH0VPNYdoynXz+3FnUEL+TRBC2EspnxjjPhdASai1vlprm8Az50sCPhnLAudLAr72SMD5koDfzAXvfceV8yUBI38g5fkfICBJKfVDQDnnLtlVMAIExhhyzpHW+hh/EFhrSZBsXEJAcBbOCOZhCYHNd0h9AVy7i1g5dVOKAAAAAElFTkSuQmCC);
+  image-rendering: pixelated;
+}
+
+.CodeMirror-lintfix-popup,
+.CodeMirror-lintfix-popup-marker {
+  margin-left: -1px;
+  border: 1px solid silver;
+  border-radius: 3px;
+}
+
+.CodeMirror-lintfix-popup {
+  background: transparent;
+  position: absolute;
+  z-index: 10;
+  font-size: 90%;
+  max-height: 20em;
+  overflow-y: auto;
+  -webkit-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+  -moz-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+  box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+  border-top-left-radius: 0;
+}
+
+/* slight priority boost over custom marker styles which normally include relative position */
+.CodeMirror-lintfix-popup-marker.CodeMirror-lintfix-popup-marker {
+  display: block;
+  padding: 0;
+  z-index: 11;
+  position: absolute;
+  margin-top: -1px;
+  background-color: white;
+  border-bottom: 1px solid white;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.CodeMirror-lintfix-list {
+  background-color: white;
+  list-style: none;
+  margin: 0;
+  padding: 2px;
+}
+
+.CodeMirror-lintfix-fix {
+  margin: 0;
+  padding: 0 4px;
+  border-radius: 2px;
+  white-space: pre;
+  color: black;
+  cursor: pointer;
+}
+
+.CodeMirror-lintfix-fix-selected {
+  background-color: #eee;
+}

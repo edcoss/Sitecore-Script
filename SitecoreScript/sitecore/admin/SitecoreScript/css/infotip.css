@@ -1,0 +1,18 @@
+.CodeMirror-infotip {
+    position: absolute;
+    z-index: 5000;
+    padding: 2px 5px;
+    /*background: #eee;*/
+    background: #F5F7FE;
+    border: 1px solid #9BA7B7;
+    border-radius: 3px;
+    -webkit-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+    -moz-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+    box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+    transition: opacity 0.5s;
+    opacity: 1;
+}
+
+.CodeMirror-infotip-hidden {
+  opacity: 0;
+}
