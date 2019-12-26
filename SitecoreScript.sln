@@ -13,6 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MirrorSharp.Common", "Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MirrorSharp.Owin", "Owin\MirrorSharp.Owin.csproj", "{075B35D7-88AF-48EF-869D-6CD7C37CA168}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{938F5448-E5AC-499F-A6EA-249DA9408FB0}"
+	ProjectSection(SolutionItems) = preProject
+		Documentation\Sitecore Script Module-1.0.zip = Documentation\Sitecore Script Module-1.0.zip
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
