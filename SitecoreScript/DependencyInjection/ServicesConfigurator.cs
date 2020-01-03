@@ -18,10 +18,10 @@ namespace Sitecore.Script.DependencyInjection
     {
         public void Configure(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped(typeof(IObjectOutputBuilder), typeof(HTMLObjectOutputBuilder));
-            serviceCollection.AddScoped(typeof(IObjectDebugger), typeof(CSharpObjectDebugger));
-            serviceCollection.AddScoped(typeof(IScriptEngine), typeof(CSharpScriptEngine));
-            serviceCollection.AddScoped(typeof(IScriptManager), typeof(CSharpScriptManager));
+            serviceCollection.AddSingleton(typeof(IObjectOutputBuilder), typeof(HTMLObjectOutputBuilder));
+            serviceCollection.AddSingleton(typeof(IObjectDebugger), typeof(CSharpObjectDebugger));
+            serviceCollection.AddSingleton(typeof(IScriptEngine), typeof(CSharpScriptEngine));
+            serviceCollection.AddSingleton(typeof(IScriptManager), typeof(CSharpScriptManager));
         }
     }
 }
