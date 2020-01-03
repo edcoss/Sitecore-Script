@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using ScriptSharp.ScriptEngine.Models;
 using ScriptSharp.ScriptEngine.Abstractions;
+using ScriptSharp.ScriptEngine.Extensions.Resolvers;
 
 namespace ScriptSharp.ScriptEngine.Engines
 {
@@ -143,13 +144,12 @@ namespace ScriptSharp.ScriptEngine.Engines
 
         public void Configure(string path, IEnumerable<string> dllReferences)
         {
-            var systemCore = typeof(System.Linq.Queryable).Assembly;
             ScriptOptions = ScriptOptions
                 .WithFilePath(path)
                 .WithReferences(dllReferences)
                 .WithFileEncoding(Encoding.UTF8)
                 .WithEmitDebugInformation(true)
-                .AddReferences(systemCore);
+                .WithMetadataResolver(new CacheMetadataReferenceResolver(System.Collections.Immutable.ImmutableArray<string>.Empty, path));
         }
 
         public ScriptExecutionResponse Execute(string code)
@@ -182,6 +182,7 @@ namespace ScriptSharp.ScriptEngine.Engines
             {
                 if (sw.IsRunning) sw.Stop();
                 response.ElapsedMilliseconds = sw.ElapsedMilliseconds;
+                GC.Collect();
             }
             return response;
         }
