@@ -66,7 +66,7 @@
                         <div class="Right labeled">
                             <div class="row label">
                                 <div class="col-md-1 white-text">Output</div>
-                                <div class="offset-md-9 col-md-2 executionTime white-text">Executed in <asp:Literal ID="TimeExecution" runat="server" /> ms</div>                            
+                                <div class="offset-md-7 col-md-4 executionTime white-text">Executed in <asp:Literal ID="TimeExecution" runat="server" /> ms</div>                            
                             </div>
                             <div class="row">
                                 <div id="outputContainer" class="col-12">
