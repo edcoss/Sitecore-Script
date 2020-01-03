@@ -126,11 +126,7 @@ namespace Sitecore.Script.Pipelines
         {
             foreach (var assemblyDllFile in GetAllDllsFromFolder(path))
             {
-                if (!string.IsNullOrEmpty(assemblyDllFile) && !dotNetDllFiles.Contains(assemblyDllFile))
-                {
-                    Sitecore.Diagnostics.Log.Info("[Sitecore.Script] OWIN.Startup, adding reference: " + assemblyDllFile, this);
-                    dotNetDllFiles.Add(assemblyDllFile);
-                }
+                AddAssembly(assemblyDllFile);
             }
         }
     }
