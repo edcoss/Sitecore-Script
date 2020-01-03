@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using ScriptSharp.ScriptEngine;
+﻿using ScriptSharp.ScriptEngine;
 using ScriptSharp.ScriptEngine.Abstractions;
-using Sitecore.Data.Managers;
 using Sitecore.Script.Helpers;
 using Sitecore.Script.Models;
 using Sitecore.Script.Pipelines;
@@ -14,8 +12,6 @@ using System.Security.Permissions;
 using System.Threading;
 using System.Web;
 using System.Web.Services;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Sitecore.Script
 {
