@@ -217,6 +217,7 @@ namespace ScriptSharp.ScriptEngine.Engines
             {
                 if (sw.IsRunning) sw.Stop();
                 response.ElapsedMilliseconds = sw.ElapsedMilliseconds;
+                GC.Collect();
             }
             return response;
         }
@@ -283,6 +284,7 @@ namespace ScriptSharp.ScriptEngine.Engines
             {
                 if (sw.IsRunning) sw.Stop();
                 response.ElapsedMilliseconds = sw.ElapsedMilliseconds;
+                GC.Collect();
             }
             return response;
         }
