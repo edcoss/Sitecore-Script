@@ -716,6 +716,7 @@
     
         const cmOptions = assign({ gutters: [], indentUnit: 4 }, options.forCodeMirror, {
             lineSeparator: lineSeparator,
+            lineNumbers: true,
             mode: languageModes[options.language],
             lint: { async: true, getAnnotations: lintGetAnnotations, hasGutters: true },
             lintFix: { getFixes: getFixes }
