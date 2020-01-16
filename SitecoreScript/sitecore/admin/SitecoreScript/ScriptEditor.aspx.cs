@@ -1,5 +1,6 @@
 ﻿using ScriptSharp.ScriptEngine;
 using ScriptSharp.ScriptEngine.Abstractions;
+using ScriptSharp.ScriptEngine.Models;
 using Sitecore.Script.Helpers;
 using Sitecore.Script.Models;
 using Sitecore.Script.Pipelines;
@@ -266,6 +267,36 @@ namespace Sitecore.Script
                 }
             }
             return treeNode;
+        }
+
+        /// <summary>
+        /// REPL mode used to evaluate lines of code, which are syntactically complete
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        [WebMethod(EnableSession = true)]
+        public static REPLReturnResults EvaluateCode(string source)
+        {
+            var response = ScriptManager.RunREPL(new REPLParameters()
+            {
+                Code = source,
+            });
+            return response;
+        }
+
+        /// <summary>
+        /// Indicates whether a piece of code is syntactically complete
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        [WebMethod(EnableSession = true)]
+        public static REPLReturnResults IsBalancedCode(string source)
+        {
+            REPLReturnResults results = new REPLReturnResults()
+            {
+                IsBalanced = ScriptManager.IsCompilableCode(source)
+            };
+            return results;
         }
     }
 }

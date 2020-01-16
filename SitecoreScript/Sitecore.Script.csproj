@@ -194,6 +194,7 @@
     <Content Include="sitecore\admin\SitecoreScript\css\monokai.css" />
     <Content Include="sitecore\admin\SitecoreScript\css\scripteditor.css" />
     <Content Include="sitecore\admin\SitecoreScript\css\show-hint.css" />
+    <Content Include="sitecore\admin\SitecoreScript\css\simplescrollbars.css" />
     <Content Include="sitecore\admin\SitecoreScript\img\arrow-alt-circle-right-regular.svg" />
     <Content Include="sitecore\admin\SitecoreScript\img\arrow-circle-right-orange.svg" />
     <Content Include="sitecore\admin\SitecoreScript\img\arrow-circle-right-red.svg" />
@@ -245,8 +246,17 @@
     <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red7.svg" />
     <Content Include="sitecore\admin\SitecoreScript\img\tools-solid-red8.svg" />
     <Content Include="sitecore\admin\SitecoreScript\img\tools-solid.svg" />
+    <Content Include="sitecore\admin\SitecoreScript\js\annotatescrollbar.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\closebrackets.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\match-highlighter.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\matchbrackets.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\matchesonscrollbar.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\placeholder.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\repl.js" />
     <Content Include="sitecore\admin\SitecoreScript\js\jstree.js" />
     <Content Include="sitecore\admin\SitecoreScript\js\scripteditor.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\searchcursor.js" />
+    <Content Include="sitecore\admin\SitecoreScript\js\simplescrollbars.js" />
     <Content Include="sitecore\admin\SitecoreScript\ScriptEditor.aspx" />
     <Content Include="sitecore\admin\SitecoreScript\js\clike.js" />
     <Content Include="sitecore\admin\SitecoreScript\js\codemirror.js" />

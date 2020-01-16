@@ -24,6 +24,7 @@ namespace MirrorSharp.Advanced {
         /// Sets or unsets script mode for the Roslyn session.
         /// </summary>
         /// <param name="isScript">Whether the session should use script mode.</param>
+        /// <param name="isRepl">Whether in script mode is used in REPL</param>
         /// <param name="hostObjectType">Host object type for the session; must be <c>null</c> if <paramref name="isScript" /> is <c>false</c>.</param>
         /// <remarks>
         /// Members of <paramref name="hostObjectType" /> are directly available to the script. For example
@@ -32,6 +33,6 @@ namespace MirrorSharp.Advanced {
         /// </remarks>
         /// <seealso cref="ProjectInfo.IsSubmission"/>
         /// <seealso cref="ProjectInfo.HostObjectType"/>
-        void SetScriptMode(bool isScript = true, [CanBeNull] Type hostObjectType = null);
+        void SetScriptMode(bool isScript = true, bool isRepl = false, [CanBeNull] Type hostObjectType = null);
     }
 }

@@ -22,6 +22,7 @@ namespace MirrorSharp.Advanced {
         [NotNull] private TCompilationOptions _compilationOptions;
         [NotNull] private ImmutableList<MetadataReference> _metadataReferences;
         private bool _isScript;
+        private bool _isRepl;
         [CanBeNull] private Type _hostObjectType;
 
         internal MirrorSharpRoslynOptions(
@@ -57,6 +58,7 @@ namespace MirrorSharp.Advanced {
 
         /// <summary>Sets or unsets script mode for this language.</summary>
         /// <param name="isScript">Whether the language should use script mode.</param>
+        /// <param name="isRepl">Whether script mode is used in REPL.</param>
         /// <param name="hostObjectType">Host object type for the session; must be <c>null</c> if <paramref name="isScript" /> is <c>false</c>.</param>
         /// <returns>Current instance (for convenience).</returns>
         /// <remarks>
@@ -66,11 +68,12 @@ namespace MirrorSharp.Advanced {
         /// </remarks>
         /// <seealso cref="ProjectInfo.IsSubmission"/>
         /// <seealso cref="ProjectInfo.HostObjectType"/>
-        public TSelf SetScriptMode(bool isScript = true, Type hostObjectType = null) {
-            RoslynScriptHelper.Validate(isScript, hostObjectType);
+        public TSelf SetScriptMode(bool isScript = true, bool isRepl = false, Type hostObjectType = null) {
+            RoslynScriptHelper.Validate(isScript, isRepl, hostObjectType);
 
             ParseOptions = (TParseOptions)ParseOptions.WithKind(RoslynScriptHelper.GetSourceKind(isScript));
             _isScript = isScript;
+            _isRepl = isRepl;
             _hostObjectType = hostObjectType;
 
             return (TSelf)this;
@@ -96,5 +99,6 @@ namespace MirrorSharp.Advanced {
         ImmutableList<MetadataReference> IRoslynLanguageOptions.MetadataReferences => MetadataReferences;
         bool IRoslynLanguageOptions.IsScript => _isScript;
         Type IRoslynLanguageOptions.HostObjectType => _hostObjectType;
+        bool IRoslynLanguageOptions.IsRepl => _isRepl;
     }
 }

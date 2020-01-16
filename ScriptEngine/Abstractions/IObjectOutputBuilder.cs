@@ -27,6 +27,8 @@ namespace ScriptSharp.ScriptEngine.Abstractions
         string GetOutputFieldObject(int indent, AccessModifier accessModifier, string objectType, string fieldName, object objectValue, EvalCode code);
         string GetOutputScriptEngineError(int indent, Exception ex);
 
+        string BuildOutputREPL(TextWriter output, TextWriter error, TextWriter returnValueOutput, Exception ex);
+
         string BuildOutput(TextWriter output, TextWriter error, TextWriter returnValueOutput, Exception ex, int indent, bool eval);
 
     }

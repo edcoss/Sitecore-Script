@@ -10,5 +10,6 @@ namespace MirrorSharp.Internal.Roslyn {
 
         bool IsScript { get; }
         Type HostObjectType { get; }
+        bool IsRepl { get; }
     }
 }

@@ -28,6 +28,42 @@ namespace ScriptSharp.ScriptEngine.CSharp
             scriptEngine.Configure(binPath, assembliesList);
         }
 
+        public REPLReturnResults RunREPL(REPLParameters parameters)
+        {
+            var returnResults = new REPLReturnResults();
+            var returnValueWriter = new StringWriter();
+            var outputWriter = new StringWriter();
+            var errorWriter = new StringWriter();
+
+            try
+            {
+                Console.SetOut(outputWriter);
+                Console.SetError(errorWriter);
+
+                var response = scriptEngine.Execute(parameters.Code);
+                if (response != null && response.ReturnValue != null)
+                {
+                    returnResults.ElapsedMilliseconds = response.ElapsedMilliseconds;
+                    returnResults.Results = response.ReturnValue.ToString();
+                }
+
+                returnResults.Results += objectDebugger.OutputBuilder.BuildOutputREPL(outputWriter, errorWriter, returnValueWriter, null);
+            }
+            catch (Exception ex)
+            {
+                returnResults.IsError = true;
+                returnResults.Results += objectDebugger.OutputBuilder.BuildOutputREPL(outputWriter, errorWriter, returnValueWriter, ex);
+                returnResults.ElapsedMilliseconds = 0;
+            }
+            finally
+            {
+                returnValueWriter.Dispose();
+                outputWriter.Dispose();
+                errorWriter.Dispose();
+            }
+            return returnResults;
+        }
+
         public ScriptReturnResults RunScript(ScriptParameters parameters)
         {
             var returnResults = new ScriptReturnResults();
@@ -121,6 +157,11 @@ namespace ScriptSharp.ScriptEngine.CSharp
             return returnResults;
         }
 
+        public bool IsCompilableCode(string code)
+        {
+            return scriptEngine.IsCompleteStatement(code);
+        }
+
         private string GetVariableDetails(string code, int startIndent)
         {
             string variableDetails = string.Empty;
@@ -144,7 +185,6 @@ namespace ScriptSharp.ScriptEngine.CSharp
             }
             return evalDetails;
         }
-
 
     }
 }

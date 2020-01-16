@@ -14,6 +14,7 @@ namespace ScriptSharp.ScriptEngine.Abstractions
         ScriptExecutionResponse Evaluate(string code);
         void ResetScriptState();
         object GetVariable(string code);
+        bool IsCompleteStatement(string code);
 
     }
 }

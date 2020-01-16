@@ -102,6 +102,8 @@
     <Compile Include="Extensions\Resolvers\CacheMetadataReferenceResolver.cs" />
     <Compile Include="Extensions\Utilities\FileUtilities.cs" />
     <Compile Include="Extensions\Utilities\RelativePathResolver.cs" />
+    <Compile Include="Models\REPLParameters.cs" />
+    <Compile Include="Models\REPLReturnResults.cs" />
     <Compile Include="OutputBuilders\HTML\HTMLOutputParameters.cs" />
     <Compile Include="OutputBuilders\HTML\HTMLObjectOutputBuilder.cs" />
     <Compile Include="OutputBuilders\HTML\HTMLOutputHelper.cs" />

@@ -3,7 +3,9 @@
 SSE.SelectedNodeId = "";
 SSE.SelectedNodeType = "";
 SSE.SelectedNodePath = "";
-SSE.ms = null;
+SSE.msEditor = {};
+SSE.msRepl = {};
+SSE.replCode = null;
 
 SSE.ExpandCode = function () {
     var $element = $(this);
@@ -122,7 +124,7 @@ SSE.GetScriptCode = function () {
             if (code) {
                 var codeElement = document.getElementById('code');
                 codeElement.value = code;
-                SSE.ms.setText(code);
+                SSE.msEditor.setText(code);
                 $('#loadScriptTreeModal').modal('hide');
                 $('#scriptPath').text(SSE.SelectedNodePath);
                 $('#scriptPathField').val(SSE.SelectedNodePath);
@@ -136,7 +138,7 @@ SSE.SaveScriptCode = function () {
     if (!SSE.SelectedNodeId) return false;
     if (!SSE.SelectedNodeType) return false;
     var scriptName = $('#scriptNameField').val();
-    var fullCode = SSE.ms.getCodeMirror().getValue();
+    var fullCode = SSE.msEditor.getCodeMirror().getValue();
     var paramData = { itemId: SSE.SelectedNodeId, name: scriptName, code: fullCode };
     $.ajax({
         type: 'POST',
@@ -160,8 +162,74 @@ SSE.SaveScriptCode = function () {
     });
 };
 
+SSE.isBalanced = function (code, resolve, reject) {
+    SSE.replCode = code;
+    var codeData = { source: code };
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: "ScriptEditor.aspx/IsBalancedCode",
+        data: JSON.stringify(codeData),
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("ERROR on EvaluateCode call.\n" +
+                "XMLHttpRequest: " + XMLHttpRequest.responseText + "\n" +
+                "Status: " + textStatus + "\n" +
+                "Error thrown: " + errorThrown + "\n");
+            console.dir(XMLHttpRequest);
+            reject(errorThrown);
+        },
+        success: function (result) {
+            resolve(result.d.IsBalanced);
+        }
+    });
+    return false;
+};
+SSE.eval = function (code, resolve, reject) {
+    var codeData = { source: code };
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: "ScriptEditor.aspx/EvaluateCode",
+        data: JSON.stringify(codeData),
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("ERROR on EvaluateCode call.\n" +
+                "XMLHttpRequest: " + XMLHttpRequest.responseText + "\n" +
+                "Status: " + textStatus + "\n" +
+                "Error thrown: " + errorThrown + "\n");
+            console.dir(XMLHttpRequest);
+            reject(errorThrown);
+        },
+        success: function (result) {
+            resolve(result.d);
+        }
+    });
+    return false;
+};
+
 $(document).ready(function () {
     $('a.expand-code').on('click', SSE.ExpandCode);
+
+    $('#scriptMode').on('click', function () {
+        var $this = $(this);
+        $this.parent().addClass('active');
+        $('#replMode').removeClass('active');
+        $('.script-mode-options').show();
+        $('.script-editor').show();
+        $('.script-repl').hide();
+        $('.Left').css('width', '50rem');
+        $('.Right').show();
+    });
+
+    $('#replMode').on('click', function () {
+        var $this = $(this);
+        $this.parent().addClass('active');
+        $('#scriptMode').removeClass('active');
+        $('.script-mode-options').hide();
+        $('.script-repl').show();
+        $('.script-editor').hide();    
+        $('.Left').css('width','100%');
+        $('.Right').hide();
+    });
 
     $('#loadScript').on('click', {
         modalSelector: '#loadScriptTreeModal',
@@ -182,31 +250,75 @@ $(document).ready(function () {
         $('#scriptPath').text(SSE.SelectedNodePath);
     }
 
+    $('.script-repl').hide();
+
     'use strict';
-    const textarea = document.getElementById('code');
+    const editorTextarea = document.getElementById('code');
+    const replTextarea = document.getElementById('repl');
     const outputResults = document.getElementById('Output');
 
     outputResults.style.height = (window.innerHeight - 100) + 'px';
     outputResults.style.display = "block";
 
-    textarea.style.height = (window.innerHeight - 100) + 'px';
-    textarea.style.display = "block";
+    editorTextarea.style.height = (window.innerHeight - 100) + 'px';
+    editorTextarea.style.display = "block";
 
-    SSE.ms = mirrorsharp(textarea, {
+    replTextarea.style.height = (window.innerHeight - 100) + 'px';
+    replTextarea.style.display = "none";
+
+    SSE.msEditor = mirrorsharp(editorTextarea, {
         serviceUrl: window.location.href.replace(/^http(s?:\/\/[^/]+).*$/i, 'ws$1/mirrorsharp'),
         selfDebugEnabled: true,
-        language: 'C#'
+        language: 'C#',
+        forCodeMirror: {
+            theme: "default", // for more examples, look at: https://codemirror.net/demo/theme.html
+            lineNumbers: true,
+            autoCloseBrackets: true,
+            matchBrackets: true,
+            // To highlight on scrollbars as well, pass annotateScrollbar in options as below.
+            //highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
+            scrollbarStyle: "simple" // or "overlay"
+        }
     });
-    const codemirrorContainer = document.getElementsByClassName('CodeMirror')[0];
-    codemirrorContainer.style.height = (window.innerHeight - 100) + 'px';
+
+    SSE.msRepl = mirrorsharpREPL(replTextarea, {
+        module: SSE,
+        serviceUrl: window.location.href.replace(/^http(s?:\/\/[^/]+).*$/i, 'ws$1/msrepl'),
+        selfDebugEnabled: true,
+        language: 'C#',
+        prompt: {
+            gutterName: 'repl-prompt',
+            ready: ">>",
+            wait: "..",
+            print: "--"
+        },
+        forCodeMirror: {
+            theme: "default", // for more examples, look at: https://codemirror.net/demo/theme.html
+            gutters: ['repl-prompt'],
+            autoCloseBrackets: true,
+            matchBrackets: true,
+            // To highlight on scrollbars as well, pass annotateScrollbar in options as below.
+            //highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
+            scrollbarStyle: "simple" // or "overlay"
+        }
+    });
+
+    var codemirrorContainers = document.getElementsByClassName('CodeMirror');
+    for (let i = 0; i < codemirrorContainers.length; i++) {
+        codemirrorContainers[i].style.height = (window.innerHeight - 100) + 'px';
+    }    
 
     const language = 'C#';
-    const mode = 'script';
-    SSE.ms.sendServerOptions({ 'language': language, 'x-mode': mode });
+    const scriptMode = 'script';
+    const replMode = 'repl';
+    SSE.msEditor.sendServerOptions({ 'language': language, 'x-mode': scriptMode });
+    SSE.msRepl.sendServerOptions({ 'language': language, 'x-mode': replMode });
 
     window.addEventListener("resize", function (obj, e) {
         outputResults.style.height = (window.innerHeight - 100) + 'px';
-        codemirrorContainer.style.height = (window.innerHeight - 100) + 'px';
-        textarea.style.height = (window.innerHeight - 100) + 'px';
+        editorTextarea.style.height = (window.innerHeight - 100) + 'px';
+        for (let i = 0; i < codemirrorContainers.length; i++) {
+            codemirrorContainers[i].style.height = (window.innerHeight - 100) + 'px';
+        }
     });
 });

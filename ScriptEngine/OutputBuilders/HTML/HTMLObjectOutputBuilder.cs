@@ -456,5 +456,47 @@ namespace ScriptSharp.ScriptEngine.OutputBuilders
         {
             return text.Replace("\n", "<br/>");
         }
+
+        public string BuildOutputREPL(TextWriter output, TextWriter error, TextWriter returnValueOutput, Exception ex)
+        {
+            StringWriter swOutput = output as StringWriter;
+            StringWriter swError = error as StringWriter;
+            StringWriter swReturnValueOutput = returnValueOutput as StringWriter;
+
+            swOutput.Flush();
+            swError.Flush();
+            swReturnValueOutput.Flush();
+
+            var sb = new StringBuilder();
+            var outputSb = swOutput.GetStringBuilder();
+            var errorSb = swError.GetStringBuilder();
+            var returnValueSb = swReturnValueOutput.GetStringBuilder();
+
+            if (outputSb.Length > 0)
+            {
+                sb.Append(outputSb.ToString());
+            }
+            if (errorSb.Length > 0)
+            {
+                sb.Append(errorSb.ToString());
+            }
+            if (returnValueSb.Length > 0)
+            {
+                sb.Append(returnValueSb.ToString());
+            }
+            if (ex != null)
+            {
+                sb.Append("Exception: ").AppendLine(ex.Message);
+                sb.Append("Stacktrace: ").AppendLine(ex.StackTrace);
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                    sb.Append("Inner Exception: ").AppendLine(ex.Message);
+                    sb.Append("Stacktrace: ").AppendLine(ex.StackTrace);
+                }
+            }
+
+            return sb.ToString();
+        }
     }
 }

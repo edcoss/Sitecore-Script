@@ -19,7 +19,10 @@ namespace Sitecore.Script
             switch (value)
             {
                 case "script":
-                    session.Roslyn.SetScriptMode(true, typeof(Random));
+                    session.Roslyn.SetScriptMode(true, false, typeof(Random));
+                    break;
+                case "repl":
+                    session.Roslyn.SetScriptMode(true, true, typeof(Random));
                     break;
                 case "regular":
                     session.Roslyn.SetScriptMode(false);

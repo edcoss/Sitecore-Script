@@ -25,6 +25,9 @@ namespace MirrorSharp.Internal.Handlers {
         public async Task ExecuteAsync(AsyncData data, WorkSession session, ICommandResultSender sender, CancellationToken cancellationToken) {
             // Temporary suppression, need to figure out the best approach here.
             // ReSharper disable once HeapView.BoxingAllocation
+            if (session.Roslyn.IsRepl)
+                return;
+
             var diagnostics = (IReadOnlyList<Diagnostic>)await session.LanguageSession.GetDiagnosticsAsync(cancellationToken).ConfigureAwait(false);
             object extensionResult = null;
             try {

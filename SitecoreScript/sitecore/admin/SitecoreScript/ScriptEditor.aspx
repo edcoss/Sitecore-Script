@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <link rel="stylesheet" href="css/codemirror.css">
+      <link rel="stylesheet" href="css/simplescrollbars.css">
       <link rel="stylesheet" href="css/lint.css">
       <link rel="stylesheet" href="css/show-hint.css">
       <link rel="stylesheet" href="css/lint-fix.css">
@@ -22,25 +23,33 @@
         <input type="hidden" name="scriptPath" id="scriptPathField" runat="server" />
         <div class="Top">
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                <div class="col-md-4 logo-col">
+                <div class="col-md-2 logo-col">
                     <div class="logo"></div>
                     <div>Sitecore Script</div>
                 </div>
             
                 <div class="col-md-10">           
                     <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <ul class="navbar-nav mr-auto">
-						    <li class="nav-item active">
+                        <ul class="navbar-nav">
+                            <li class="nav-item active">
+                                <a id="scriptMode" href="javascript:void(0);" title="Use Script Mode" class="nav-link script-mode">Script</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="replMode" href="javascript:void(0);" title="Use REPL Mode" class="nav-link repl-mode">REPL</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav submenu-padding script-mode-options">
+						    <li class="nav-item">
 							    <asp:LinkButton ID="Roslyn" runat="server" OnClick="Run_Click" Text="Run" CausesValidation="False" CssClass="nav-link run" />
 						    </li>
 						    <li class="nav-item">
 							    <asp:LinkButton ID="ResetRoslyn" runat="server" OnClick="ResetRun_Click" Text="Reset" CausesValidation="False" CssClass="nav-link reset" />
 						    </li>
                             <li class="nav-item">
-                                <a id="loadScript" href="javascript:void(0);" class="nav-link load-script">Load</a>
+                                <a id="loadScript" href="javascript:void(0);" title="Load Script" class="nav-link load-script">Load</a>
                             </li>
                             <li class="nav-item">
-                                <a id="saveScript" href="javascript:void(0);" class="nav-link save-script">Save</a>
+                                <a id="saveScript" href="javascript:void(0);" title="Save Script" class="nav-link save-script">Save</a>
                             </li>
                         </ul>
                     </div>
@@ -53,20 +62,33 @@
                 <div class="col-md-12 main">
                     <div class="Container" >
                         <div class="Left labeled">
-                            <div class="row label">
-                                <div class="col-1 white-text">Code</div>
-                                <div class="col-11 white-text"># <span id="scriptPath">Untitled script</span></div>
+                            <div class="script-editor">
+                                <div class="row label">
+                                    <div class="col-1 white-text">Code</div>
+                                    <div class="col-11 white-text"># <span id="scriptPath">Untitled script</span></div>
+                                </div>
+                                <div class="row">
+                                    <div id="editorArea" class="col-12 codeeditor">                                
+                                        <textarea rows="2" cols="20" id="code" style="display: none;" name="code"><asp:Literal runat="server" ID="CodeLiteral"/></textarea>
+                                    </div>   
+                                </div>
                             </div>
-                            <div class="row">
-                                <div id="editorArea" class="col-12 codeeditor">                                
-                                    <textarea rows="2" cols="20" id="code" style="display: none;" name="code"><asp:Literal runat="server" ID="CodeLiteral"/></textarea>
-                                </div>   
+                            <div class="script-repl">
+                                <div class="row label">
+                                    <div class="col-1 white-text">REPL</div>
+                                    <div class="col-11 white-text">&#8811; <span id="scriptPath">A CSharp Interactive space</span></div>
+                                </div>
+                                <div class="row">
+                                    <div id="replArea" class="col-12 codeeditor">                                
+                                        <textarea rows="2" cols="20" id="repl" placeholder="Start here! remember to set using statements at the top..." style="display: none;" name="repl"><asp:Literal runat="server" ID="ReplLiteral"/></textarea>
+                                    </div>   
+                                </div>
                             </div>
                         </div>                        
                         <div class="Right labeled">
                             <div class="row label">
-                                <div class="col-md-1 white-text">Output</div>
-                                <div class="offset-md-7 col-md-4 executionTime white-text">Executed in <asp:Literal ID="TimeExecution" runat="server" /> ms</div>                            
+                                <div class="col-md-1 col-sm-1 white-text">Output</div>
+                                <div class="offset-md-7 offset-sm-3 col-md-4 col-sm-2 executionTime white-text">Executed in <asp:Literal ID="TimeExecution" runat="server" /> ms</div>                            
                             </div>
                             <div class="row">
                                 <div id="outputContainer" class="col-12">
@@ -133,12 +155,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="js/jstree.js"></script>
     <script src="js/codemirror.js"></script>
+    <script src="js/closebrackets.js"></script>
+    <script src="js/placeholder.js"></script>
+    <script src="js/simplescrollbars.js"></script>
+    <script src="js/matchbrackets.js"></script>
+    <script src="js/annotatescrollbar.js"></script>
+    <script src="js/matchesonscrollbar.js"></script>
+    <script src="js/searchcursor.js"></script>
+    <script src="js/match-highlighter.js"></script>
     <script src="js/clike.js"></script>
     <script src="js/lint.js"></script>
     <script src="js/show-hint.js"></script>
     <script src="js/lint-fix.js"></script>
     <script src="js/infotip.js"></script>
     <script src="js/mirrorsharp.js"></script>
+    <script src="js/repl.js"></script>
     <script src="js/scripteditor.js"></script>
     </form>
   </body>

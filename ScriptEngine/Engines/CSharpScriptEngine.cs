@@ -10,6 +10,8 @@ using Microsoft.CodeAnalysis;
 using ScriptSharp.ScriptEngine.Models;
 using ScriptSharp.ScriptEngine.Abstractions;
 using ScriptSharp.ScriptEngine.Extensions.Resolvers;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace ScriptSharp.ScriptEngine.Engines
 {
@@ -149,7 +151,7 @@ namespace ScriptSharp.ScriptEngine.Engines
                 .WithReferences(dllReferences)
                 .WithFileEncoding(Encoding.UTF8)
                 .WithEmitDebugInformation(true)
-                .WithMetadataResolver(new CacheMetadataReferenceResolver(System.Collections.Immutable.ImmutableArray<string>.Empty, path));
+                .WithMetadataResolver(new CacheMetadataReferenceResolver(System.Collections.Immutable.ImmutableArray<string>.Empty, path));            
         }
 
         public ScriptExecutionResponse Execute(string code)
@@ -288,5 +290,39 @@ namespace ScriptSharp.ScriptEngine.Engines
             }
             return response;
         }
+
+        public bool IsCompleteStatement(string code)
+        {
+            var parseOptions = new CSharpParseOptions(LanguageVersion.Default, kind: SourceCodeKind.Script);
+            var syntaxTree = SyntaxFactory.ParseSyntaxTree(code.ToString(), parseOptions);
+            if (SyntaxFactory.IsCompleteSubmission(syntaxTree))
+            {
+                return true;
+            }
+
+            return TryWithSemicolon(syntaxTree, parseOptions);
+        }
+
+        private bool TryWithSemicolon(SyntaxTree syntaxTree, CSharpParseOptions parseOptions)
+        {
+            var root = syntaxTree.GetRootAsync().Result;
+            var nodes = root.ChildNodes().ToList();
+            if (nodes.Any()
+                && nodes.First() is FieldDeclarationSyntax declaration
+                && declaration.SemicolonToken.IsMissing)
+            {
+                var withSemicolon = declaration.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+                var newTree = syntaxTree.WithRootAndOptions(
+                    root.ReplaceNode(declaration, withSemicolon),
+                    parseOptions
+                );
+                if (SyntaxFactory.IsCompleteSubmission(newTree))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }

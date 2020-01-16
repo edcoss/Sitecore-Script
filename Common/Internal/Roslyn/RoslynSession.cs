@@ -30,9 +30,13 @@ namespace MirrorSharp.Internal.Roslyn {
         private bool _documentOutOfDate;
         private Document _document;
         private SourceText _sourceText;
+        private bool _isScript;
+        private bool _isRepl;
 
         private Solution _lastWorkspaceAnalyzerOptionsSolution;
         private AnalyzerOptions _workspaceAnalyzerOptions;
+        private ImmutableArray<DiagnosticAnalyzer> _analyzers;
+        private ImmutableDictionary<string, ImmutableArray<CodeFixProvider>> _codeFixProviders;
 
         private readonly CompletionService _completionService;
 
@@ -50,9 +54,9 @@ namespace MirrorSharp.Internal.Roslyn {
             QuickInfoService = QuickInfoService.GetService(_document);
             _completionService = CompletionService.GetService(_document);
 
-            Analyzers = analyzers;
+            _analyzers = analyzers;
             SignatureHelpProviders = signatureHelpProviders;
-            CodeFixProviders = codeFixProviders;
+            _codeFixProviders = codeFixProviders;
         }
 
         private Document CreateProjectAndOpenNewDocument(Workspace workspace, ProjectInfo projectInfo, SourceText sourceText) {
@@ -66,7 +70,8 @@ namespace MirrorSharp.Internal.Roslyn {
         }
 
         public string GetText() => SourceText.ToString();
-        public void ReplaceText(string newText, int start = 0, int? length = null) {
+        public void ReplaceText(string newText, int start = 0, int? length = null) 
+        {
             var finalLength = length ?? SourceText.Length - start;
             _oneTextChange[0] = new TextChange(new TextSpan(start, finalLength), newText);
             SourceText = SourceText.WithChanges(_oneTextChange);
@@ -143,13 +148,32 @@ namespace MirrorSharp.Internal.Roslyn {
 
         [CanBeNull] public CurrentSignatureHelp? CurrentSignatureHelp { get; set; }
 
-        public ImmutableArray<DiagnosticAnalyzer> Analyzers { get; }
-        public ImmutableDictionary<string, ImmutableArray<CodeFixProvider>> CodeFixProviders { get; }
+        public ImmutableArray<DiagnosticAnalyzer> Analyzers
+        {
+            get
+            {
+                return _analyzers; 
+            }
+        }
+        public ImmutableDictionary<string, ImmutableArray<CodeFixProvider>> CodeFixProviders 
+        {
+            get
+            {
+                return _codeFixProviders;
+            }
+        }
+
+        public bool IsScript { get { return _isScript; } }
+        public bool IsRepl { get { return _isRepl; } }
+
         public QuickInfoService QuickInfoService { get; }
         public ImmutableArray<ISignatureHelpProviderWrapper> SignatureHelpProviders { get; }
 
-        public void SetScriptMode(bool isScript = true, Type hostObjectType = null) {
-            RoslynScriptHelper.Validate(isScript, hostObjectType);
+        public void SetScriptMode(bool isScript = true, bool isRepl = false, Type hostObjectType = null) {
+            _isScript = isScript;
+            _isRepl = isRepl;
+
+            RoslynScriptHelper.Validate(isScript, isRepl, hostObjectType);
             var sourceKind = RoslynScriptHelper.GetSourceKind(isScript);
 
             var project = Project;

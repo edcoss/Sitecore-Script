@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ScriptSharp.ScriptEngine
+namespace ScriptSharp.ScriptEngine.Models
 {
     public class ScriptParameters
     {
