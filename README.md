@@ -13,4 +13,8 @@ Sample coding exercise
 
 Loading and Saving scripts
 
-![alt text](https://github.com/edcoss/Sitecore-Script/blob/master/Documentation/SitecoreScriptLoadSave.gif "Sample Coding Exercise")
+![alt text](https://github.com/edcoss/Sitecore-Script/blob/master/Documentation/SitecoreScriptLoadSave.gif "Loading and Saving scripts")
+
+REPL mode
+
+![alt text](https://github.com/edcoss/Sitecore-Script/blob/master/Documentation/SitecoreScriptREPL.gif "REPL mode")
