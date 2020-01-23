@@ -125,19 +125,23 @@ namespace Sitecore.Script
             this.Output.Text = string.Empty;
             var code = HttpUtility.HtmlDecode(Request.Unvalidated.Form["code"]);
             this.CodeLiteral.Text = code;
+            ScriptReturnResults response = null;
 
-            var response = ScriptManager.RunScript(new ScriptParameters()
+            using (new ScriptStateSwitcher(ScriptSecurityState.Limited))
             {
-                Eval = false,
-                Code = code,
-                EvalCode = new string[] { },
-                StartIndent = 0,
-                MaxIndent = int.MaxValue,
-                DisplayTypesForObjectDetails = displayTypesForObjectDetails,
-                SkipTypesForPropertyDetails = skipTypesForPropertyDetails,
-                SkipTypesForValueReprint = skipTypesForValueReprint,
-                TypesAsPrimitivesForValuePrint = typesAsPrimitivesForValuePrint
-            });
+                response = ScriptManager.RunScript(new ScriptParameters()
+                {
+                    Eval = false,
+                    Code = code,
+                    EvalCode = new string[] { },
+                    StartIndent = 0,
+                    MaxIndent = int.MaxValue,
+                    DisplayTypesForObjectDetails = displayTypesForObjectDetails,
+                    SkipTypesForPropertyDetails = skipTypesForPropertyDetails,
+                    SkipTypesForValueReprint = skipTypesForValueReprint,
+                    TypesAsPrimitivesForValuePrint = typesAsPrimitivesForValuePrint
+                });
+            }
 
             this.TimeExecution.Text = response.ElapsedMilliseconds.ToString();
             if (response.IsHTMLResult)
@@ -277,11 +281,14 @@ namespace Sitecore.Script
         [WebMethod(EnableSession = true)]
         public static REPLReturnResults EvaluateCode(string source)
         {
-            var response = ScriptManager.RunREPL(new REPLParameters()
+            using (new ScriptStateSwitcher(ScriptSecurityState.Limited))
             {
-                Code = source,
-            });
-            return response;
+                var response = ScriptManager.RunREPL(new REPLParameters()
+                {
+                    Code = source,
+                });
+                return response;
+            }
         }
 
         /// <summary>

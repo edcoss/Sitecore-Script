@@ -269,6 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyInjection\ServicesConfigurator.cs" />
+    <Compile Include="DependencyInjection\ServicesOverride.cs" />
     <Compile Include="Extensions\SetOptionsFromClientExtension.cs" />
     <Compile Include="Helpers\ItemMapper.cs" />
     <Compile Include="Helpers\Settings.cs" />
@@ -276,8 +277,11 @@
     <Compile Include="Pipelines\IgnoreUrlList.cs" />
     <Compile Include="Pipelines\MirrorSharpOwinMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\ScriptAuthorizationManager.cs" />
+    <Compile Include="Security\ScriptStateSwitcher.cs" />
     <Compile Include="Security\SitecoreIdentity.cs" />
     <Compile Include="Security\SitecorePrincipal.cs" />
+    <Compile Include="Security\ScriptAuthorizationProvider.cs" />
     <Compile Include="sitecore\admin\SitecoreScript\ScriptEditor.aspx.cs">
       <DependentUpon>ScriptEditor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

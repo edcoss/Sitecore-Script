@@ -4,10 +4,6 @@ using ScriptSharp.ScriptEngine.OutputBuilders;
 using ScriptSharp.ScriptEngine.Engines;
 using ScriptSharp.ScriptEngine.CSharp;
 using Sitecore.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Sitecore.Script.DependencyInjection
 {
