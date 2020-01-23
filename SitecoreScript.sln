@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{938F5448-E5AC-499F-A6EA-249DA9408FB0}"
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Sitecore Script Module-1.0.zip = Documentation\Sitecore Script Module-1.0.zip
+		Documentation\SitecoreScriptAccessRights.gif = Documentation\SitecoreScriptAccessRights.gif
 		Documentation\SitecoreScriptInitialLoad.gif = Documentation\SitecoreScriptInitialLoad.gif
 		Documentation\SitecoreScriptLoadSave.gif = Documentation\SitecoreScriptLoadSave.gif
 		Documentation\SitecoreScriptREPL.gif = Documentation\SitecoreScriptREPL.gif
