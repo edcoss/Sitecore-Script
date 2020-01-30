@@ -18,3 +18,7 @@ Loading and Saving scripts
 REPL mode
 
 ![alt text](https://github.com/edcoss/Sitecore-Script/blob/master/Documentation/SitecoreScriptREPL.gif "REPL mode")
+
+Configurable restrictive access rights for script execution
+
+![alt text](https://github.com/edcoss/Sitecore-Script/blob/master/Documentation/SitecoreScriptAccessRights.gif "Restrictive access rights")
