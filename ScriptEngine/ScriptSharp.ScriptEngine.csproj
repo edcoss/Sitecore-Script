@@ -99,9 +99,6 @@
     <Compile Include="Abstractions\IScriptEngine.cs" />
     <Compile Include="Abstractions\IScriptManager.cs" />
     <Compile Include="Engines\CSharpScriptEngine.cs" />
-    <Compile Include="Extensions\Resolvers\CacheMetadataReferenceResolver.cs" />
-    <Compile Include="Extensions\Utilities\FileUtilities.cs" />
-    <Compile Include="Extensions\Utilities\RelativePathResolver.cs" />
     <Compile Include="Models\REPLParameters.cs" />
     <Compile Include="Models\REPLReturnResults.cs" />
     <Compile Include="OutputBuilders\HTML\HTMLOutputParameters.cs" />
@@ -120,10 +117,6 @@
     <Compile Include="OutputBuilders\Text\VerboseTextObjectOutputBuilder.cs" />
     <Compile Include="Models\ScriptExecutionResponse.cs" />
     <Compile Include="Extensions\ScriptTypeExtensions.cs" />
-    <Compile Include="Extensions\Utilities\FileNameUtilities.cs" />
-    <Compile Include="Extensions\Utilities\Hash.cs" />
-    <Compile Include="Extensions\Utilities\PathUtilities.cs" />
-    <Compile Include="Extensions\Utilities\ReflectionUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

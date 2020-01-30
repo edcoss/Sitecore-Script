@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Script", "Sitecore
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptSharp.ScriptEngine", "ScriptEngine\ScriptSharp.ScriptEngine.csproj", "{2AC60740-DB95-40CD-A4FE-A46C35098C4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Owin", "SitecoreOwin\Sitecore.Owin\Sitecore.Owin.csproj", "{FE8DFC39-40DD-41C6-BFB4-F79A38000CA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Script.Owin", "SitecoreOwin\Sitecore.Owin\Sitecore.Script.Owin.csproj", "{FE8DFC39-40DD-41C6-BFB4-F79A38000CA5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MirrorSharp.Common", "Common\MirrorSharp.Common.csproj", "{5BFEBF5A-E2EA-4703-A5BE-4E49CEF0BCEA}"
 EndProject

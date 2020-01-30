@@ -1,4 +1,5 @@
-﻿using ScriptSharp.ScriptEngine.Abstractions;
+﻿using Microsoft.CodeAnalysis;
+using ScriptSharp.ScriptEngine.Abstractions;
 using ScriptSharp.ScriptEngine.CSharp;
 using ScriptSharp.ScriptEngine.Engines;
 using ScriptSharp.ScriptEngine.Models;
@@ -22,10 +23,10 @@ namespace ScriptSharp.ScriptEngine.CSharp
             this.objectDebugger = objectDebugger;
         }
 
-        public void InitializeEngine(string binPath, List<string> assembliesList)
+        public void InitializeEngine(string binPath, List<string> assembliesList, MetadataReferenceResolver metadataReferenceResolver, SourceReferenceResolver sourceReferenceResolver)
         {
             scriptEngine.ResetScriptState();
-            scriptEngine.Configure(binPath, assembliesList);
+            scriptEngine.Configure(binPath, assembliesList, metadataReferenceResolver, sourceReferenceResolver);
         }
 
         public REPLReturnResults RunREPL(REPLParameters parameters)

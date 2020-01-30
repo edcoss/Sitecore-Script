@@ -5,7 +5,7 @@ using Owin;
 //[assembly: OwinStartup(typeof(Sitecore.Owin.Startup))]
 namespace Sitecore.Owin
 {
-  using Sitecore.Owin.Pipelines.InitializeOwinMiddleware;
+  using Sitecore.Script.Owin.Pipelines.InitializeOwinMiddleware;
   using Sitecore.Pipelines;
 
     public class Startup

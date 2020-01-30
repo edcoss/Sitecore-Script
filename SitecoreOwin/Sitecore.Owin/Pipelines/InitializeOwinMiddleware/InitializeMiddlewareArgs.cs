@@ -1,6 +1,6 @@
 ﻿using IAppBuilder = Owin.IAppBuilder;
 
-namespace Sitecore.Owin.Pipelines.InitializeOwinMiddleware
+namespace Sitecore.Script.Owin.Pipelines.InitializeOwinMiddleware
 {
     using Sitecore.Pipelines;
 

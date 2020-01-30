@@ -7,8 +7,8 @@
     <ProjectGuid>{FE8DFC39-40DD-41C6-BFB4-F79A38000CA5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sitecore.Owin</RootNamespace>
-    <AssemblyName>Sitecore.Owin</AssemblyName>
+    <RootNamespace>Sitecore.Script.Owin</RootNamespace>
+    <AssemblyName>Sitecore.Script.Owin</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

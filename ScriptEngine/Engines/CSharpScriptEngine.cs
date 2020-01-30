@@ -9,7 +9,6 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using ScriptSharp.ScriptEngine.Models;
 using ScriptSharp.ScriptEngine.Abstractions;
-using ScriptSharp.ScriptEngine.Extensions.Resolvers;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -144,60 +143,46 @@ namespace ScriptSharp.ScriptEngine.Engines
             ScriptOptions.AddImports(namespaces);
         }
 
-        public void Configure(string path, IEnumerable<string> dllReferences)
+        public void Configure(string path, IEnumerable<string> dllReferences, MetadataReferenceResolver metadataReferenceResolver, SourceReferenceResolver sourceReferenceResolver)
         {
             ScriptOptions = ScriptOptions
                 .WithFilePath(path)
                 .WithReferences(dllReferences)
                 .WithFileEncoding(Encoding.UTF8)
-                .WithEmitDebugInformation(true)
-                .WithMetadataResolver(new CacheMetadataReferenceResolver(System.Collections.Immutable.ImmutableArray<string>.Empty, path));            
+                .WithEmitDebugInformation(true);
+
+            ScriptOptions = metadataReferenceResolver != null ? ScriptOptions.WithMetadataResolver(metadataReferenceResolver) : ScriptOptions;
+            ScriptOptions = sourceReferenceResolver != null ? ScriptOptions.WithSourceResolver(sourceReferenceResolver) : ScriptOptions;
         }
 
         public ScriptExecutionResponse Execute(string code)
         {
-            var response = new ScriptExecutionResponse();
-            var sw = new System.Diagnostics.Stopwatch();
-            try
-            {
-                sw.Start();
-                ScriptState = ScriptState == null ? CSharpScript.RunAsync(code, ScriptOptions).Result : ScriptState.ContinueWithAsync(code, ScriptOptions).Result;
-                sw.Stop();
-                response.ReturnValue = ScriptState.ReturnValue;
-            }
-            catch (AggregateException ae)
-            {
-                var sb = new StringBuilder();
-                int indent = 0;
-                foreach (var ex in ae.Flatten().InnerExceptions)
-                {
-                    var indentStr = new string(' ', indent);
-                    sb.Append(indentStr).Append("Error Message: ").AppendLine(ex.Message);
-                    sb.Append(indentStr).Append("StackTrace: ").AppendLine(ex.StackTrace);
-                    sb.AppendLine();
-                    indent += 4;
-                }
-                Console.Error.WriteLine(sb.ToString());
-                return null;
-            }
-            finally
-            {
-                if (sw.IsRunning) sw.Stop();
-                response.ElapsedMilliseconds = sw.ElapsedMilliseconds;
-                GC.Collect();
-            }
+            var response = ExecuteScriptCode(code,
+                (codeParam) => {
+                    ScriptState = ScriptState == null ? CSharpScript.RunAsync(codeParam, ScriptOptions).Result : ScriptState.ContinueWithAsync(codeParam, ScriptOptions).Result;
+                    return ScriptState.ReturnValue;
+                });
             return response;
         }
 
         public ScriptExecutionResponse ExecuteDelegate(string code)
         {
+            var response = ExecuteScriptCode(code,
+                (codeParam) => { 
+                    var script = CSharpScript.Create(codeParam, ScriptOptions).CreateDelegate();
+                    return script.Invoke().Result;
+                });
+            return response;
+        }
+
+        public ScriptExecutionResponse ExecuteScriptCode(string code, Func<string, object> function)
+        {
             var response = new ScriptExecutionResponse();
             var sw = new System.Diagnostics.Stopwatch();
             try
             {
                 sw.Start();
-                var script = CSharpScript.Create(code, ScriptOptions).CreateDelegate();
-                response.ReturnValue = script.Invoke().Result;
+                response.ReturnValue = function(code);
                 sw.Stop();
             }
             catch (AggregateException ae)

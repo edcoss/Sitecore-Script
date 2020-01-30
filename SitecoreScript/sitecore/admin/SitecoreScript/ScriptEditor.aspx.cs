@@ -1,12 +1,14 @@
 ﻿using ScriptSharp.ScriptEngine;
 using ScriptSharp.ScriptEngine.Abstractions;
 using ScriptSharp.ScriptEngine.Models;
+using Sitecore.Script.Extensions.Resolvers;
 using Sitecore.Script.Helpers;
 using Sitecore.Script.Models;
 using Sitecore.Script.Pipelines;
 using Sitecore.Script.Security;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Security;
 using System.Security.Permissions;
@@ -91,6 +93,10 @@ namespace Sitecore.Script
                 Sitecore.Web.WebUtil.Redirect("/sitecore/admin/login.aspx?returnUrl=" + Request.Url.PathAndQuery, true);
             }
             Thread.CurrentPrincipal = principal;
+            if (!principal.IsInRole("Administrator"))
+            {
+                throw new SecurityException("Only Sitecore Administrator users are allowed!");
+            }
 
             if (!IsPostBack)
             {
@@ -110,7 +116,10 @@ namespace Sitecore.Script
         private void Initialize(bool reset)
         {
             var binPath = Server.MapPath("~/bin");
-            if (reset) ScriptManager.InitializeEngine(binPath, MirrorSharpOwinMiddleware.DotNetDllFiles);
+            if (reset) ScriptManager.InitializeEngine(binPath,
+                MirrorSharpOwinMiddleware.DotNetDllFiles,
+                new CacheMetadataReferenceResolver(ImmutableArray<string>.Empty, binPath),
+                new ScriptSourceResolver(ImmutableArray<string>.Empty, binPath));
         }
 
         /// <summary>

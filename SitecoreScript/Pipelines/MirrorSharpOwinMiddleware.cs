@@ -1,6 +1,7 @@
 ﻿using MirrorSharp;
 using MirrorSharp.Owin;
-using Sitecore.Owin.Pipelines.InitializeOwinMiddleware;
+using Sitecore.Script.Owin.Pipelines.InitializeOwinMiddleware;
+using Sitecore.Scripts.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,12 @@ using System.Web.Routing;
 namespace Sitecore.Script.Pipelines
 {
     /// <summary>
-    /// Processor that leverages OWIN startup in Sitecore
+    /// Processor that leverages OWIN startup in Sitecore 8.2 (This does not work on Sitecore 9+)
     /// Make sure to enable WebSocket Protocol on Windows Features:
     /// in the control panel window, navigate to Internet Information Services > World Wide Web Services > Application Development Features
     /// Then enable Websocket Protocol, to be able to work on IIS
     /// </summary>
-    public class MirrorSharpOwinMiddleware
+    public class MirrorSharpOwinMiddleware : IMirrorSharpOwinProcessor
     {
         public void Process(InitializeOwinMiddlewareArgs args)
         {
