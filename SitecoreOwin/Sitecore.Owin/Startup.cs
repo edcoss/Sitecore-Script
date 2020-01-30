@@ -2,8 +2,8 @@
 using Owin;
 
 // Uncomment when using Sitecore or use web.config appSetting
-//[assembly: OwinStartup(typeof(Sitecore.Owin.Startup))]
-namespace Sitecore.Owin
+//[assembly: OwinStartup(typeof(Sitecore.Script.Owin.Startup))]
+namespace Sitecore.Script.Owin
 {
   using Sitecore.Script.Owin.Pipelines.InitializeOwinMiddleware;
   using Sitecore.Pipelines;

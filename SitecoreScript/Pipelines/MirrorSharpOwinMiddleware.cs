@@ -11,7 +11,7 @@ using System.Web.Routing;
 namespace Sitecore.Script.Pipelines
 {
     /// <summary>
-    /// Processor that leverages OWIN startup in Sitecore 8.2 (This does not work on Sitecore 9+)
+    /// Direct processor that leverages OWIN startup in Sitecore 8.2 (This needs to be called differently from Sitecore 9+)
     /// Make sure to enable WebSocket Protocol on Windows Features:
     /// in the control panel window, navigate to Internet Information Services > World Wide Web Services > Application Development Features
     /// Then enable Websocket Protocol, to be able to work on IIS
@@ -31,14 +31,15 @@ namespace Sitecore.Script.Pipelines
                     {
                         SelfDebugEnabled = true,
                         IncludeExceptionDetails = true,
-                        SetOptionsFromClient = new SetOptionsFromClientExtension()
+                        SetOptionsFromClient = new SetOptionsFromClientExtension(),
+                        ExcludeDiagnosticIds = excludedDiagnosticIds
                     }
                     .SetupCSharp(c =>
                     {
                         c.MetadataReferences = c.MetadataReferences.Clear();
                         c.AddMetadataReferencesFromFiles(dotNetDllFiles.ToArray());
                     })
-                );
+                ) ;
                 RouteTable.Routes.MapOwinPath("mirrorsharp", "/mirrorsharp");
 
                 // This is a another alternative to initialize Middleware code:
@@ -66,14 +67,7 @@ namespace Sitecore.Script.Pipelines
 
         private static List<string> dotNetDllFiles = new List<string>();
         private static List<string> excludedDllFiles = new List<string>();
-
-        public static List<string> ExcludedDllFiles
-        {
-            get
-            {
-                return excludedDllFiles;
-            }
-        }
+        private static List<string> excludedDiagnosticIds = new List<string>();
 
         public static List<string> DotNetDllFiles
         {
@@ -128,6 +122,14 @@ namespace Sitecore.Script.Pipelines
             foreach (var assemblyDllFile in GetAllDllsFromFolder(path))
             {
                 AddAssembly(assemblyDllFile);
+            }
+        }
+
+        public void ExcludeDiagnosticId(string diagnosticId)
+        {
+            if (!string.IsNullOrWhiteSpace(diagnosticId))
+            {
+                excludedDiagnosticIds.Add(diagnosticId);
             }
         }
     }

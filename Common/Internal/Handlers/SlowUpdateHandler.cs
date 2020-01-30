@@ -15,9 +15,11 @@ using MirrorSharp.Internal.Results;
 namespace MirrorSharp.Internal.Handlers {
     internal class SlowUpdateHandler : ICommandHandler {
         [CanBeNull] private readonly ISlowUpdateExtension _extension;
+        private readonly List<string> _excludedDiagnosticIds;
 
-        public SlowUpdateHandler([CanBeNull] ISlowUpdateExtension extension) {
+        public SlowUpdateHandler([CanBeNull] ISlowUpdateExtension extension, List<string> excludedDiagnosticIds) {
             _extension = extension;
+            _excludedDiagnosticIds = excludedDiagnosticIds;
         }
 
         public char CommandId => CommandIds.SlowUpdate;
@@ -31,12 +33,13 @@ namespace MirrorSharp.Internal.Handlers {
             var diagnostics = (IReadOnlyList<Diagnostic>)await session.LanguageSession.GetDiagnosticsAsync(cancellationToken).ConfigureAwait(false);
             object extensionResult = null;
             try {
+                var filteredDiagnostics = diagnostics.Where(d => !_excludedDiagnosticIds.Contains(d.Id)).ToList();
                 if (_extension != null) {
-                    var mutableDiagnostics = diagnostics.ToList();
+                    var mutableDiagnostics = filteredDiagnostics;
                     extensionResult = await _extension.ProcessAsync(session, mutableDiagnostics, cancellationToken).ConfigureAwait(false);
                     diagnostics = mutableDiagnostics;
                 }
-                await SendSlowUpdateAsync(diagnostics, session, extensionResult, sender, cancellationToken).ConfigureAwait(false);
+                await SendSlowUpdateAsync(filteredDiagnostics, session, extensionResult, sender, cancellationToken).ConfigureAwait(false);
             }
             finally {
                 (extensionResult as IDisposable)?.Dispose();

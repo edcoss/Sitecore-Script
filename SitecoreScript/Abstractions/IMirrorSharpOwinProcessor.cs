@@ -11,5 +11,6 @@ namespace Sitecore.Scripts.Abstractions
         void AddAssembly(string assemblyPath);
         void ExcludeFile(string filename);
         void AddAllAssembliesInPath(string path);
+        void ExcludeDiagnosticId(string diagnosticId);
     }
 }

@@ -48,7 +48,7 @@ namespace MirrorSharp.Internal {
                 new SetOptionsHandler(_languageManager, ArrayPool<char>.Shared, _options.SetOptionsFromClient),
                 new SignatureHelpStateHandler(signatureHelp),
                 new RequestInfoTipHandler(),
-                new SlowUpdateHandler(_options.SlowUpdate),
+                new SlowUpdateHandler(_options.SlowUpdate, _options.ExcludeDiagnosticIds),
                 new TypeCharHandler(typedCharEffects)
             };
         }

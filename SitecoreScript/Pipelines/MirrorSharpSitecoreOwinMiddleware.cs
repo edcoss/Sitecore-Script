@@ -38,5 +38,10 @@ namespace Sitecore.Script.Pipelines
         {
             msOwinMiddleware.ExcludeFile(filename);
         }
+
+        public void ExcludeDiagnosticId(string diagnosticId)
+        {
+            msOwinMiddleware.ExcludeDiagnosticId(diagnosticId);
+        }
     }
 }
