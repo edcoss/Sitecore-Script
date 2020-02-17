@@ -31,7 +31,7 @@ namespace Sitecore.Script.Helpers
 
             node.text = item.Name;
             node.state = new TreeNodeState() { disabled = false, opened = true, selected = false };
-            node.icon = "/temp/iconcache/" +item.Appearance.Icon;
+            node.icon = "/-/icon/" +item.Appearance.Icon;
             node.data.Add("path", item.Paths.FullPath.Replace(Settings.ScriptLibraryPath, string.Empty));
             if (item.HasChildren && item.Children != null)
             {
