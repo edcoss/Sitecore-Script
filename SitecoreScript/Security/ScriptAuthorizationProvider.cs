@@ -11,8 +11,6 @@ namespace Sitecore.Script.Security
 {
     public class ScriptAuthorizationProvider : SqlServerAuthorizationProvider
 	{
-
-		private ItemAuthorizationHelper itemHelper;
 		private List<string> limitedAccessRightsList;
 		
 		private readonly List<string> defaultLimitedAccessRights = new List<string>
@@ -29,20 +27,7 @@ namespace Sitecore.Script.Security
 
 		public ScriptAuthorizationProvider()
 		{
-			this.itemHelper = new ItemAuthorizationHelper();
 			this.limitedAccessRightsList = new List<string>();
-		}
-
-		protected override ItemAuthorizationHelper ItemHelper
-		{
-			get
-			{
-				return this.itemHelper;
-			}
-			set
-			{
-				this.itemHelper = value;
-			}
 		}
 
 		public override void Initialize(string name, NameValueCollection config)
@@ -59,6 +44,19 @@ namespace Sitecore.Script.Security
 				// Optional: if you want to define default access rights, when configuration does not provide them
 				// limitedAccessRightsList.AddRange(defaultLimitedAccessRights);
 			}
+		}
+
+		public override AccessResult GetAccess(ISecurable entity, Account account, AccessRight accessRight)
+		{
+			AccessResult accessResult = this.GetStateAccess(entity, account, accessRight);
+			if (accessResult != null)
+			{
+				return accessResult;
+			}
+			// we skip checking cache, and read directly from database
+			accessResult = this.GetAccessCore(entity, account, accessRight);
+			// we skip also updating cache
+			return accessResult;
 		}
 
 		protected override AccessResult GetAccessCore(ISecurable entity, Account account, AccessRight accessRight)
@@ -88,6 +86,5 @@ namespace Sitecore.Script.Security
 				return base.GetAccessCore(entity, account, accessRight);
 			}
 		}
-
 	}
 }
