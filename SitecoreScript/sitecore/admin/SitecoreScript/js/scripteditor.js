@@ -278,6 +278,9 @@ $(document).ready(function () {
             // To highlight on scrollbars as well, pass annotateScrollbar in options as below.
             //highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
             scrollbarStyle: "simple" // or "overlay"
+        },
+        keymap: {
+            'Ctrl-Enter': function () { document.getElementById('Roslyn').click(); }
         }
     });
 

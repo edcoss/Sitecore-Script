@@ -763,7 +763,8 @@
             'Ctrl-.': 'lintFixShow',
             'Shift-Ctrl-Y': selfDebug ? function() { selfDebug.requestData(connection); } : null
         };
-        cm.addKeyMap(keyMap);
+        const customKeyMap = assign(keyMap, options.keymap);
+        cm.addKeyMap(customKeyMap);
         // see https://github.com/codemirror/CodeMirror/blob/dbaf6a94f1ae50d387fa77893cf6b886988c2147/addon/lint/lint.js#L133
         // ensures that next 'id' will be -1 whether a change happened or not
         cm.state.lint.waitingFor = -2;
