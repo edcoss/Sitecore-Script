@@ -1,12 +1,13 @@
 ﻿using MirrorSharp;
 using MirrorSharp.Owin;
+using Sitecore.Script.Abstractions;
 using Sitecore.Script.Owin.Pipelines.InitializeOwinMiddleware;
-using Sitecore.Scripts.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
+using System.Xml;
 
 namespace Sitecore.Script.Pipelines
 {
@@ -16,14 +17,24 @@ namespace Sitecore.Script.Pipelines
     /// in the control panel window, navigate to Internet Information Services > World Wide Web Services > Application Development Features
     /// Then enable Websocket Protocol, to be able to work on IIS
     /// </summary>
-    public class MirrorSharpOwinMiddleware : IMirrorSharpOwinProcessor
+    public class MirrorSharpOwinMiddleware
     {
+        private static IScriptInitialConfiguration scriptConfiguration;
+
+        public static List<string> DotNetDllFiles
+        {
+            get
+            {
+                return scriptConfiguration != null ? scriptConfiguration.DotNetReferenceFiles.ToList() : new List<string>();
+            }
+        }
+
         public void Process(InitializeOwinMiddlewareArgs args)
         {
-            AddBinDllReferenceFiles();
             Sitecore.Diagnostics.Log.Info("[Sitecore.Script] OWIN.Startup: Loading assemblies references for MirrorSharp.", this);
             try
             {
+                LoadScriptConfiguration();
                 // Initialize mirrorsharp
                 args.App.UseMirrorSharp(
 
@@ -32,12 +43,12 @@ namespace Sitecore.Script.Pipelines
                         SelfDebugEnabled = true,
                         IncludeExceptionDetails = true,
                         SetOptionsFromClient = new SetOptionsFromClientExtension(),
-                        ExcludeDiagnosticIds = excludedDiagnosticIds
+                        ExcludeDiagnosticIds = scriptConfiguration.ExcludedDiagnosticIds.ToList()
                     }
                     .SetupCSharp(c =>
                     {
                         c.MetadataReferences = c.MetadataReferences.Clear();
-                        c.AddMetadataReferencesFromFiles(dotNetDllFiles.ToArray());
+                        c.AddMetadataReferencesFromFiles(scriptConfiguration.DotNetReferenceFiles.ToArray());
                     })
                 ) ;
                 RouteTable.Routes.MapOwinPath("mirrorsharp", "/mirrorsharp");
@@ -65,72 +76,11 @@ namespace Sitecore.Script.Pipelines
             Sitecore.Diagnostics.Log.Info("[Sitecore.Script] OWIN.Startup: Assembly references loaded for MirrorSharp.", this);
         }
 
-        private static List<string> dotNetDllFiles = new List<string>();
-        private static List<string> excludedDllFiles = new List<string>();
-        private static List<string> excludedDiagnosticIds = new List<string>();
-
-        public static List<string> DotNetDllFiles
+        private void LoadScriptConfiguration()
         {
-            get
-            {
-                return dotNetDllFiles;
-            }
-        }
-
-        private void AddBinDllReferenceFiles()
-        {
-            var binPath = System.Web.HttpRuntime.BinDirectory;
-            AddAllAssembliesInPath(binPath);
-        }
-
-        private string[] GetAllDllsFromFolder(string path)
-        {
-            var dllReferences = new List<string>();
-
-            foreach (var filePath in System.IO.Directory.GetFiles(path))
-            {
-                var fileName = filePath.Remove(0, path.Length + 1);
-                if (filePath.EndsWith(".dll") && !excludedDllFiles.Any(name => fileName.ToLowerInvariant() == name.ToLowerInvariant()))
-                {
-                    dllReferences.Add(filePath);
-                }
-            }
-            return dllReferences.ToArray();
-        }
-
-
-        public void AddAssembly(string assemblyPath)
-        {
-            if (!string.IsNullOrEmpty(assemblyPath) && !dotNetDllFiles.Contains(assemblyPath))
-            {
-                Sitecore.Diagnostics.Log.Info("[Sitecore.Script] OWIN.Startup, adding reference: " + assemblyPath, this);
-                dotNetDllFiles.Add(assemblyPath);
-            }
-        }
-
-        public void ExcludeFile(string filename)
-        {
-            if (!string.IsNullOrEmpty(filename) && !excludedDllFiles.Contains(filename))
-            {
-                Sitecore.Diagnostics.Log.Info("[Sitecore.Script] OWIN.Startup, excluding reference: " + filename, this);
-                excludedDllFiles.Add(filename);
-            }
-        }
-
-        public void AddAllAssembliesInPath(string path)
-        {
-            foreach (var assemblyDllFile in GetAllDllsFromFolder(path))
-            {
-                AddAssembly(assemblyDllFile);
-            }
-        }
-
-        public void ExcludeDiagnosticId(string diagnosticId)
-        {
-            if (!string.IsNullOrWhiteSpace(diagnosticId))
-            {
-                excludedDiagnosticIds.Add(diagnosticId);
-            }
+            var xmlNode = Sitecore.Configuration.Factory.GetConfigNode("sitecore-script/initialize");
+            scriptConfiguration = Sitecore.Configuration.Factory.CreateObject<IScriptInitialConfiguration>(xmlNode);
+            scriptConfiguration.LoadBinDllReferenceFiles();
         }
     }
 }

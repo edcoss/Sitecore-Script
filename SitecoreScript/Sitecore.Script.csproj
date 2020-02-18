@@ -273,7 +273,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstractions\IMirrorSharpOwinProcessor.cs" />
+    <Compile Include="Abstractions\IScriptInitialConfiguration.cs" />
+    <Compile Include="Configuration\ScriptInitialConfiguration.cs" />
     <Compile Include="DependencyInjection\ServicesConfigurator.cs" />
     <Compile Include="DependencyInjection\ServicesOverride.cs" />
     <Compile Include="Extensions\Resolvers\CacheMetadataReferenceResolver.cs" />

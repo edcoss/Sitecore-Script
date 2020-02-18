@@ -74,6 +74,11 @@ namespace MirrorSharp.Internal {
                     }
                 }
             }
+            catch(System.Exception ex) {
+                
+                System.Console.Error.WriteLine("[MiddlewareBase] WebSocketLoopAsync error: {0}\nStacktrace: {1}", ex.Message, ex.StackTrace);
+                // ignore
+            }
             finally {
                 if (connection != null) {
                     connection.Dispose();

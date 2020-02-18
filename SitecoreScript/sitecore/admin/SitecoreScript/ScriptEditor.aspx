@@ -6,6 +6,11 @@
 <head runat="server">
     <title>Sitecore Script</title>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self' 'unsafe-inline' 'unsafe-eval' https://*;
+        style-src-elem 'self' 'unsafe-inline' data: https://*;
+        script-src-elem 'self' 'unsafe-inline' data: 'unsafe-eval' https://*;
+        img-src 'self' data:">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <link rel="stylesheet" href="css/codemirror.css">
       <link rel="stylesheet" href="css/simplescrollbars.css">
