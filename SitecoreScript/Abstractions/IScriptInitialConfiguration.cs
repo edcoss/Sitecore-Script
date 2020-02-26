@@ -11,6 +11,5 @@ namespace Sitecore.Script.Abstractions
         IEnumerable<string> ExcludedFiles { get; }
         IEnumerable<string> ExcludedDiagnosticIds { get; }
 
-        void LoadBinDllReferenceFiles();
     }
 }

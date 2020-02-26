@@ -273,10 +273,10 @@ $(document).ready(function () {
         forCodeMirror: {
             theme: "default", // for more examples, look at: https://codemirror.net/demo/theme.html
             lineNumbers: true,
-            autoCloseBrackets: true,
+            autoCloseBrackets: false,
             matchBrackets: true,
             // To highlight on scrollbars as well, pass annotateScrollbar in options as below.
-            //highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
+            highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
             scrollbarStyle: "simple" // or "overlay"
         },
         keymap: {
@@ -298,7 +298,7 @@ $(document).ready(function () {
         forCodeMirror: {
             theme: "default", // for more examples, look at: https://codemirror.net/demo/theme.html
             gutters: ['repl-prompt'],
-            autoCloseBrackets: true,
+            autoCloseBrackets: false,
             matchBrackets: true,
             // To highlight on scrollbars as well, pass annotateScrollbar in options as below.
             //highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },

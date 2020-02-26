@@ -80,7 +80,6 @@ namespace Sitecore.Script.Pipelines
         {
             var xmlNode = Sitecore.Configuration.Factory.GetConfigNode("sitecore-script/initialize");
             scriptConfiguration = Sitecore.Configuration.Factory.CreateObject<IScriptInitialConfiguration>(xmlNode);
-            scriptConfiguration.LoadBinDllReferenceFiles();
         }
     }
 }

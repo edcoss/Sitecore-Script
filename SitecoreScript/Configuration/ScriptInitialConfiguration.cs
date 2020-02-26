@@ -1,8 +1,10 @@
 ﻿using Sitecore.Script.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Xml;
 
 namespace Sitecore.Script.Configuration
 {
@@ -20,7 +22,7 @@ namespace Sitecore.Script.Configuration
 
         public IEnumerable<string> ExcludedDiagnosticIds => excludedDiagnosticIds;
 
-        public void LoadBinDllReferenceFiles()
+        public void LoadBinDllReferenceFiles(XmlNode node)
         {
             var binPath = System.Web.HttpRuntime.BinDirectory;
             AddAllAssembliesInPath(binPath);
@@ -28,10 +30,22 @@ namespace Sitecore.Script.Configuration
 
         public void AddAssembly(string assemblyPath)
         {
-            if (!string.IsNullOrEmpty(assemblyPath) && !dotnetReferenceFiles.Contains(assemblyPath))
+            if (File.Exists(assemblyPath))
             {
-                Sitecore.Diagnostics.Log.Info("[Sitecore.Script] Initialization, adding reference: " + assemblyPath, this);
-                dotnetReferenceFiles.Add(assemblyPath);
+                FileInfo file = new FileInfo(assemblyPath);
+                if (!dotnetReferenceFiles.Any(reference => new FileInfo(reference).Name.ToLowerInvariant() == file.Name.ToLowerInvariant()))
+                {
+                    Sitecore.Diagnostics.Log.Info("[Sitecore.Script] Initialization, adding direct reference: " + assemblyPath, this);
+                    dotnetReferenceFiles.Add(assemblyPath);
+                }
+                else
+                {
+                    Sitecore.Diagnostics.Log.Info("[Sitecore.Script] Initialization, DLL is already added: " + assemblyPath, this);
+                }
+            }
+            else
+            {
+                Sitecore.Diagnostics.Log.Info("[Sitecore.Script] Initialization, reference not found: " + assemblyPath, this);
             }
         }
 
@@ -48,7 +62,8 @@ namespace Sitecore.Script.Configuration
         {
             foreach (var assemblyDllFile in GetAllDllsFromFolder(path))
             {
-                AddAssembly(assemblyDllFile);
+                Sitecore.Diagnostics.Log.Info("[Sitecore.Script] Initialization, adding reference: " + assemblyDllFile, this);
+                dotnetReferenceFiles.Add(assemblyDllFile);
             }
         }
 
@@ -56,13 +71,38 @@ namespace Sitecore.Script.Configuration
         {
             var dllReferences = new List<string>();
 
-            foreach (var filePath in System.IO.Directory.GetFiles(path))
+            if (Directory.Exists(path))
             {
-                var fileName = filePath.Remove(0, path.Length + 1);
-                if (filePath.EndsWith(".dll") && !excludedDllFiles.Any(name => fileName.ToLowerInvariant() == name.ToLowerInvariant()))
+                foreach (var filePath in System.IO.Directory.GetFiles(path))
                 {
-                    dllReferences.Add(filePath);
+                    FileInfo file = new FileInfo(filePath);
+                    if (filePath.ToLowerInvariant().EndsWith(".dll"))
+                    {
+                        if (!excludedDllFiles.Any(name => file.Name.ToLowerInvariant() == name.ToLowerInvariant()))
+                        {
+                            if (!dotnetReferenceFiles.Any(reference => new FileInfo(reference).Name.ToLowerInvariant() == file.Name.ToLowerInvariant()))
+                            {
+                                dllReferences.Add(filePath);
+                            }
+                            else
+                            {
+                                Sitecore.Diagnostics.Log.Info("[Sitecore.Script] Initialization, DLL is already added: " + filePath, this);
+                            }
+                        }
+                        else
+                        {
+                            Sitecore.Diagnostics.Log.Info("[Sitecore.Script] Initialization, skipping excluded file: " + filePath, this);
+                        }
+                    }
+                    else
+                    {
+                        Sitecore.Diagnostics.Log.Debug("[Sitecore.Script] Initialization, skipping file: " + filePath, this);
+                    }
                 }
+            }
+            else
+            {
+                Sitecore.Diagnostics.Log.Debug("[Sitecore.Script] Initialization, directory path not found: " + path, this);
             }
             return dllReferences.ToArray();
         }

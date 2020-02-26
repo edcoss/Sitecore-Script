@@ -14,7 +14,9 @@
 
     var Pos = CodeMirror.Pos;
 
-    var matching = { "(": ")>", ")": "(<", "[": "]>", "]": "[<", "{": "}>", "}": "{<", "<": ">>", ">": "<<" };
+    // EC: removing parenthesis
+    //var matching = { "(": ")>", ")": "(<", "[": "]>", "]": "[<", "{": "}>", "}": "{<", "<": ">>", ">": "<<" };
+    var matching = { ")": "(<", "[": "]>", "]": "[<", "{": "}>", "}": "{<", "<": ">>", ">": "<<" };
 
     function bracketRegex(config) {
         return config && config.bracketRegex || /[(){}[\]]/
